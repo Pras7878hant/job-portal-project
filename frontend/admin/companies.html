@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>My Companies - Job Portal</title>
+     <link rel="stylesheet" href="../assets/css/style.css">
+
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+     <script type="module" src="../assets/js/main.js"></script>
+     <style>
+          body {
+               font-family: Arial, sans-serif;
+               margin: 0;
+               padding: 0;
+               background-color: #f4f4f4;
+               color: #333;
+          }
+
+          .container {
+               width: 80%;
+               margin: 20px auto;
+               background-color: #fff;
+               padding: 20px;
+               border-radius: 8px;
+               box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
+
+          h1 {
+               color: #333;
+               text-align: center;
+               margin-bottom: 20px;
+          }
+
+          .company-list {
+               margin-top: 20px;
+          }
+
+          .company-list p {
+               text-align: center;
+               color: #555;
+          }
+
+          .bg-white {
+               background-color: #fff;
+          }
+
+          .p-4 {
+               padding: 1rem;
+          }
+
+          .rounded {
+               border-radius: 0.5rem;
+          }
+
+          .shadow {
+               box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+          }
+
+          .mb-4 {
+               margin-bottom: 1rem;
+          }
+
+          .text-xl {
+               font-size: 1.25rem;
+          }
+
+          .font-semibold {
+               font-weight: 600;
+          }
+
+          .text-gray-600 {
+               color: #4a5568;
+          }
+
+          .text-blue-500 {
+               color: #4299e1;
+          }
+
+          .text-gray-500 {
+               color: #a0aec0;
+          }
+
+          .text-sm {
+               font-size: 0.875rem;
+          }
+
+          .mt-2 {
+               margin-top: 0.5rem;
+          }
+
+          .mt-3 {
+               margin-top: 0.75rem;
+          }
+
+          .space-x-2> :not([hidden])~:not([hidden]) {
+               margin-left: 0.5rem;
+          }
+
+          .w-16 {
+               width: 4rem;
+          }
+
+          .h-16 {
+               height: 4rem;
+          }
+
+          .object-contain {
+               object-fit: contain;
+          }
+
+          /* Buttons */
+          .btn {
+               display: inline-block;
+               padding: 8px 15px;
+               border-radius: 5px;
+               text-decoration: none;
+               color: white;
+               background-color: #007bff;
+               transition: background-color 0.3s ease;
+               text-align: center;
+               margin-right: 10px;
+          }
+
+          .btn:hover {
+               background-color: #0056b3;
+          }
+
+          .logout-btn {
+               background-color: #dc3545;
+               border: none;
+               color: white;
+               padding: 8px 15px;
+               border-radius: 5px;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+               float: right;
+          }
+
+          .logout-btn:hover {
+               background-color: #c82333;
+          }
+
+          nav {
+               background-color: #333;
+               color: white;
+               padding: 10px 20px;
+               text-align: center;
+          }
+
+          nav a {
+               color: white;
+               text-decoration: none;
+               margin: 0 15px;
+               font-weight: bold;
+          }
+     </style>
+</head>
+
+<body>
+     <nav>
+     </nav>
+     <div class="container">
+          <h1>My Companies</h1>
+          <div id="message" class="message mt-4" style="display: none;"></div>
+          <div id="companies-list" class="company-list">
+               <p>Loading companies...</p>
+          </div>
+          <a href="company-setup.html" class="btn">Register New Company</a>
+          <a href="../post-job.html" class="btn">Post a Job</a>
+          <a href="../index.html" class="btn">Home</a>
+          <button id="logoutBtn" class="logout-btn">Logout</button>
+     </div>
+     <footer>
+     </footer>
+
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="../assets/js/admin-companies.js"></script>
+</body>
+
+</html>

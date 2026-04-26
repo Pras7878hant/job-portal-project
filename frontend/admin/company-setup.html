@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Register Company - Campus Connect</title>
+     <link rel="stylesheet" href="../assets/css/style.css">
+     <link rel="stylesheet" href="../assets/css/company-setup.css">
+
+
+
+</head>
+
+<body>
+     <header class="header-container">
+          <h1>Register New Company</h1>
+          <button id="logoutBtn" class="logout-btn">Logout</button>
+     </header>
+
+     <main class="container">
+          <form id="company-setup-form">
+               <div>
+                    <label for="company-name">Company Name:</label>
+                    <input type="text" id="company-name" name="name" required>
+               </div>
+               <div>
+                    <label for="company-description">Description:</label>
+                    <textarea id="company-description" name="description" required></textarea>
+               </div>
+               <div>
+                    <label for="company-website">Website (Optional):</label>
+                    <input type="url" id="company-website" name="website">
+               </div>
+               <div>
+                    <label for="company-location">Location:</label>
+                    <input type="text" id="company-location" name="location" placeholder="e.g., New Delhi, India">
+               </div>
+               <button type="submit" class="btn-submit">Register Company</button>
+          </form>
+          <div id="message" class="message mt-4" style="display: none;"></div>
+     </main>
+
+
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="../assets/js/company-setup.js"></script>
+     <script type="module" src="../assets/js/utils.js></script>
+
+</body>
+
+</html>

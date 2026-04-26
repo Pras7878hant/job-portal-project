@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Manage Jobs - Job Portal</title>
+     <link rel="stylesheet" href="assets/css/style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+     <link rel="stylesheet" href="assets/css/jobs.css">
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+          <script type="module" src="./assets/js/main.js"></script>
+
+    
+</head>
+
+<body>
+
+     <div class="container">
+          <h2>Manage Jobs</h2>
+          <div id="message" class="message" style="display: none;"></div>
+          <div id="jobs-list" class="job-list">
+               <p id="no-jobs-message" style="display: none;">No jobs posted yet.</p>
+          </div>
+          <a href="post-job.html" class="post-new-job-btn">Post New Job</a>
+          <button class="logout-btn" onclick="handleLogout()">Logout</button>
+     </div>
+
+     <script type="module">
+          // 
+          import { JOB_API_END_POINT, APPLICATION_API_END_POINT, handleLogout, displayMessage } from './assets/js/utils.js';
+
+          // Set axios defaults here once
+          // This is crucial for sending httpOnly cookies with requests
+          if (typeof axios !== 'undefined') {
+               axios.defaults.withCredentials = true;
+          } else {
+               console.error('Axios is not defined. Ensure axios.min.js is loaded before this script.');
+               // Fallback for user if axios is not available
+               displayMessage('Application error: Missing dependencies. Please refresh.', 'error');
+               // Immediate redirection if core dependency is missing
+               setTimeout(() => window.location.href = '../login.html', 100);
+               throw new Error("Axios not loaded.");
+          }
+
+          // Make handleLogout globally accessible for the onclick event
+          window.handleLogout = handleLogout;
+          window.deleteJob = deleteJob;
+          window.updateApplicationStatus = updateApplicationStatus;
+
+          const userRole = localStorage.getItem('userRole');
+
+          if (!userRole) {
+               displayMessage("You are not logged in. Redirecting to login.", "error");
+               setTimeout(() => window.location.href = '../login.html', 20000);
+               throw new Error("User not logged in."); // Stop further execution
+          } else if (userRole !== 'recruiter') {
+               displayMessage("You are not authorized to access this page. Redirecting...", "error");
+               setTimeout(() => window.location.href = '../browse.html', 2000);
+               throw new Error("Unauthorized access."); // Stop further execution
+          }
+
+          async function fetchRecruiterJobs() {
+               try {
+                    // axios.defaults.withCredentials = true; is already set above, no need to repeat
+                    const jobsResponse = await axios.get(`${JOB_API_END_POINT}/recruiter-jobs`);
+                    const jobs = jobsResponse.data.jobs;
+                    const jobsList = document.getElementById('jobs-list');
+                    const noJobsMessage = document.getElementById('no-jobs-message');
+
+                    if (jobs.length > 0) {
+                         jobsList.innerHTML = ''; // Clear previous content
+                         for (const job of jobs) {
+                              const jobCard = document.createElement('div');
+                              jobCard.classList.add('job-card');
+                              jobCard.setAttribute('data-job-id', job._id);
+
+                              let applicationsHtml = `<div class="application-section"><h4>Applications:</h4>`;
+                              if (job.applications && job.applications.length > 0) {
+                                   applicationsHtml += `<ul class="application-list">`;
+                                   for (const application of job.applications) {
+                                        const applicantName = application.applicant ? application.applicant.fullName : 'Student Name N/A';
+                                        const applicantEmail = application.applicant ? application.applicant.email : 'N/A';
+                                        const displayStatus = application.status.charAt(0).toUpperCase() + application.status.slice(1);
+
+                                        applicationsHtml += `
+                                <li class="application-item">
+                                    <p><strong>${applicantName}</strong> (${applicantEmail})</p>
+                                    <p>Status:
+                                        <select class="status-dropdown" onchange="updateApplicationStatus('${application._id}', this.value)">
+                                            <option value="pending" ${application.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                            <option value="reviewed" ${application.status === 'reviewed' ? 'selected' : ''}>Reviewed</option>
+                                            <option value="interview" ${application.status === 'interview' ? 'selected' : ''}>Interview</option>
+                                            <option value="accepted" ${application.status === 'accepted' ? 'selected' : ''}>Accepted</option>
+                                            <option value="rejected" ${application.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+                                        </select>
+                                    </p>
+                                    <a href="application-details.html?id=${application._id}" target="_blank" class="view-details-btn">View Details</a>
+                                </li>
+                                `;
+                                   }
+                                   applicationsHtml += `</ul>`;
+                              } else {
+                                   applicationsHtml += `<p>No applications for this job yet.</p>`;
+                              }
+                              applicationsHtml += `</div>`;
+
+
+                              jobCard.innerHTML = `
+                            <h3>${job.title}</h3>
+                            <p>Company: ${job.company?.name || 'N/A'}</p>
+                            <p>Location: ${job.location}</p>
+                            <p>Type: ${job.jobType}</p>
+                            <div class="job-actions">
+                                <a href="edit-job.html?id=${job._id}">Edit</a>
+                                <button class="delete-btn" onclick="deleteJob('${job._id}')">Delete</button>
+                            </div>
+                            ${applicationsHtml}
+                        `;
+                              jobsList.appendChild(jobCard);
+                         }
+                         noJobsMessage.style.display = 'none';
+                    } else {
+                         jobsList.innerHTML = '';
+                         noJobsMessage.style.display = 'block';
+                    }
+
+               } catch (error) {
+                    console.error('Error fetching recruiter jobs:', error);
+                    // Use displayMessage from utils.js here
+                    displayMessage('Error fetching your jobs. Please try again.', 'error');
+                    if (error.response) {
+                         if (error.response.status === 401 || error.response.status === 403) {
+                              displayMessage("Session expired or unauthorized. Please log in again.", "error");
+                              localStorage.removeItem('userRole');
+                              // No need to remove 'token' here, it's HttpOnly.
+                              setTimeout(() => window.location.href = '../login.html', 20000);
+                         } else {
+                              displayMessage(`Error: ${error.response.data.message || error.response.statusText}`, 'error');
+                         }
+                    } else if (error.request) {
+                         displayMessage("Network error: No response from server. Is the backend running?", 'error');
+                    } else {
+                         displayMessage(`An unexpected error occurred: ${error.message}`, 'error');
+                    }
+               }
+          }
+
+          async function deleteJob(jobId) {
+               if (!confirm('Are you sure you want to delete this job? This will also remove all associated applications.')) return;
+
+               try {
+                    const response = await axios.delete(`${JOB_API_END_POINT}/${jobId}`);
+
+                    if (response.data.success) {
+                         displayMessage('Job deleted successfully.', 'success');
+                         const jobCardToRemove = document.querySelector(`.job-card[data-job-id="${jobId}"]`);
+                         if (jobCardToRemove) {
+                              jobCardToRemove.remove();
+                         }
+                         const jobsList = document.getElementById('jobs-list');
+                         if (!jobsList.children.length) {
+                              document.getElementById('no-jobs-message').style.display = 'block';
+                         }
+                    } else {
+                         displayMessage(response.data.message || 'Failed to delete job.', 'error');
+                    }
+               } catch (error) {
+                    console.error('Delete job error:', error);
+                    displayMessage('An error occurred while deleting the job.', 'error');
+                    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                         displayMessage("Session expired or unauthorized. Please log in again.", "error");
+                         localStorage.removeItem('userRole');
+                         setTimeout(() => window.location.href = '../login.html', 20000);
+                    }
+               }
+          }
+
+          async function updateApplicationStatus(applicationId, newStatus) {
+               try {
+                    const response = await axios.put(`${APPLICATION_API_END_POINT}/status/${applicationId}`, { status: newStatus });
+
+                    if (response.data.success) {
+                         displayMessage(`Application status updated to ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}.`, 'success');
+                    } else {
+                         displayMessage(response.data.message || 'Failed to update application status.', 'error');
+                    }
+               } catch (error) {
+                    console.error('Error updating application status:', error);
+                    displayMessage('An error occurred while updating the application status.', 'error');
+                    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                         displayMessage("Session expired or unauthorized. Please log in again.", "error");
+                         localStorage.removeItem('userRole');
+                         setTimeout(() => window.location.href = '../login.html', 20000);
+                    }
+               }
+          }
+
+          document.addEventListener('DOMContentLoaded', fetchRecruiterJobs);
+
+     </script>
+</body>
+
+</html>

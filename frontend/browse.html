@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Browse Jobs - Job Portal</title>
+     <link rel="stylesheet" href="assets/css/style.css">
+     <style>
+          html,
+          body {
+               height: 100%;
+               margin: 0;
+               font-family: Arial, sans-serif;
+               background-color: #f3f4f6;
+          }
+
+          .page-wrapper {
+               display: flex;
+               flex-direction: column;
+               min-height: 100vh;
+          }
+
+          .header-container {
+               background-color: #fff;
+               padding: 1rem 2rem;
+               border-bottom: 1px solid #e0e0e0;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+          }
+
+          .header-container h1 {
+               margin: 0;
+               color: #333;
+               font-size: 1.8rem;
+          }
+
+          .user-actions {
+               display: flex;
+               align-items: center;
+               gap: 15px;
+          }
+
+          .user-actions span {
+               font-weight: bold;
+               color: #555;
+          }
+
+          .logout-btn {
+               padding: 0.6rem 1.2rem;
+               background-color: #dc3545;
+               color: white;
+               border: none;
+               border-radius: 5px;
+               cursor: pointer;
+               font-size: 0.9rem;
+               transition: background-color 0.3s ease;
+          }
+
+          .logout-btn:hover {
+               background-color: #c82333;
+          }
+
+          .container {
+               width: 100%;
+               max-width: 900px;
+               margin: 2rem auto;
+               padding: 2rem;
+               background-color: #fff;
+               border-radius: 8px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               box-sizing: border-box;
+               flex: 1;
+          }
+
+          h2 {
+               font-size: 2rem;
+               margin-bottom: 1.5rem;
+               text-align: center;
+               color: #333;
+          }
+
+          .job-list {
+               display: grid;
+               gap: 1.5rem;
+               list-style: none;
+               padding: 0;
+          }
+
+          .job-item {
+               background-color: #f9fafb;
+               padding: 1.5rem;
+               border-radius: 8px;
+               border: 1px solid #e5e7eb;
+               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+               transition: transform 0.2s ease, box-shadow 0.2s ease;
+          }
+
+          .job-item:hover {
+               transform: translateY(-5px);
+               box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+          }
+
+          .job-item h3 {
+               font-size: 1.4rem;
+               margin-top: 0;
+               margin-bottom: 0.7rem;
+               color: #3b82f6;
+          }
+
+          .job-item p {
+               margin: 0.4rem 0;
+               font-size: 0.95rem;
+               color: #555;
+          }
+
+          .job-item .job-meta {
+               font-size: 0.85rem;
+               color: #777;
+               margin-top: 0.5rem;
+          }
+
+          .job-item .job-meta span {
+               margin-right: 15px;
+          }
+
+          .view-details-btn {
+               display: inline-block;
+               margin-top: 1rem;
+               padding: 0.7rem 1.4rem;
+               background-color: #28a745;
+               color: white;
+               text-decoration: none;
+               border-radius: 5px;
+               font-size: 0.9rem;
+               font-weight: bold;
+               transition: background-color 0.3s ease;
+          }
+
+          .view-details-btn:hover {
+               background-color: #218838;
+          }
+
+          #loading-message,
+          #error-message,
+          #no-jobs-message {
+               text-align: center;
+               font-size: 1.1rem;
+               color: #777;
+               margin-top: 2rem;
+          }
+
+          .footer {
+               background-color: #f1f1f1;
+               text-align: center;
+               padding: 1rem;
+               color: #555;
+               font-size: 0.9rem;
+               border-top: 1px solid #ddd;
+               margin-top: auto;
+          }
+     </style>
+</head>
+
+<body>
+     <div class="page-wrapper">
+          <div class="header-container">
+               <h1>Job Listings</h1>
+               <div class="user-actions">
+                    <span id="welcome-message"></span>
+               </div>
+          </div>
+
+          <div class="container">
+               <ul id="job-list" class="job-list">
+                    <p id="loading-message">Loading jobs...</p>
+                    <p id="error-message" style="display: none; color: red;"></p>
+                    <p id="no-jobs-message" style="display: none;">No jobs found at the moment.</p>
+               </ul>
+               <a href="applications.html" class="view-details-btn" id="my-applications-btn" style="display: none;">My
+                    Applications</a>
+          </div>
+
+          <footer class="footer">
+               <p>&copy; 2025 Skratcher. All rights reserved.</p>
+          </footer>
+     </div>
+
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="./assets/js/utils.js"></script>
+     <script type="module" src="./assets/js/browse.js"></script>
+     <script type="module" src="./assets/js/main.js"></script>
+</body>
+
+</html>

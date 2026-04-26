@@ -1,0 +1,61 @@
+#job-details {
+     max-width: 800px;
+     margin: 0 auto;
+}
+button:hover {
+     transform: scale(1.05);
+}
+
+ body {
+               margin: 0;
+               font-family: Arial, sans-serif;
+               background-color: #f3f4f6;
+               min-height: 100vh;
+               padding-bottom: 60px;
+          }
+
+          .container {
+               width: 100%;
+               max-width: 800px;
+               margin: 0 auto;
+               padding: 2rem;
+               background-color: #fff;
+               border-radius: 8px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               box-sizing: border-box;
+               margin-top: 2rem;
+          }
+
+          h2 {
+               font-size: 1.5rem;
+               margin-bottom: 1rem;
+               color: #333;
+          }
+
+          p {
+               margin: 0.5rem 0;
+               color: #555;
+          }
+
+          button {
+               display: block;
+               margin: 1rem 0;
+               padding: 0.75rem 1.5rem;
+               background-color: #3b82f6;
+               color: white;
+               border: none;
+               border-radius: 4px;
+               font-size: 1rem;
+               font-weight: bold;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+          }
+
+          button:hover {
+               background-color: #2563eb;
+          }
+
+          .hidden {
+               display: none;
+               /* Add this style for the hidden class */
+          }

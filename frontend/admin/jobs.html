@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <link rel="stylesheet" href="../assets/css/style.css">
+     <link rel="stylesheet" href="../assets/css/admin-jobs.css">
+</head>
+
+<body>
+     <form id="post-job-form">
+          <div>
+               <label for="job-title">Job Title:</label>
+               <input type="text" id="job-title" name="jobTitle" required>
+          </div>
+          <div>
+               <label for="job-description">Description:</label>
+               <textarea id="job-description" name="jobDescription" required></textarea>
+          </div>
+          <div>
+               <label for="job-requirements">Requirements (comma-separated):</label>
+               <textarea id="job-requirements" name="jobRequirements" required
+                    placeholder="e.g., JavaScript, React, Node.js"></textarea>
+          </div>
+          <div>
+               <label for="job-type">Job Type:</label>
+               <select id="job-type" name="jobType" required>
+                    <option value="">Select Job Type</option>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Part-Time">Part-Time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Temporary">Temporary</option>
+                    <option value="Internship">Internship</option>
+               </select>
+          </div>
+          <div>
+               <label for="job-experience-level">Experience Level:</label>
+               <select id="job-experience-level" name="jobExperienceLevel" required>
+                    <option value="">Select Experience Level</option>
+                    <option value="Entry-Level">Entry-Level</option>
+                    <option value="Mid-Level">Mid-Level</option>
+                    <option value="Senior-Level">Senior-Level</option>
+                    <option value="Director">Director</option>
+                    <option value="Executive">Executive</option>
+               </select>
+          </div>
+          <div>
+               <label for="job-position">Position:</label>
+               <input type="text" id="job-position" name="jobPosition" required placeholder="e.g., Software Engineer">
+          </div>
+          <div>
+               <label for="job-company">Company:</label>
+               <select id="job-company" name="jobCompany" required>
+                    <option value="">Select Company</option>
+               </select>
+          </div>
+          <div>
+               <label for="job-location">Location:</label>
+               <input type="text" id="job-location" name="jobLocation" required>
+          </div>
+          <div>
+               <label for="job-salary">Salary:</label>
+               <input type="number" id="job-salary" name="jobSalary" required min="0">
+          </div>
+          <button type="submit">Post Job</button>
+     </form>
+     <div id="message"></div>
+
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="../assets/js/admin-jobs.js"></script>
+     <script type="module" src="../assets/js/main.js"></script>
+     <script type="module" src="../assets/js/utils.js"></script>
+</body>
+
+</html>

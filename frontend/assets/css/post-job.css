@@ -1,0 +1,140 @@
+#post-job-form {
+     max-width: 600px;
+}
+input, textarea, select {
+     transition: all 0.3s ease;
+}
+button:hover {
+     transform: scale(1.05);
+}
+
+
+
+ body {
+               font-family: Arial, sans-serif;
+               background-color: #f3f4f6;
+               margin: 0;
+               min-height: 100vh;
+               padding-bottom: 60px;
+          }
+
+          .container {
+               width: 100%;
+               max-width: 700px;
+               margin: 2rem auto;
+               padding: 2.5rem;
+               background-color: #fff;
+               border-radius: 8px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               box-sizing: border-box;
+          }
+
+          h2 {
+               font-size: 2rem;
+               margin-bottom: 1.5rem;
+               text-align: center;
+               color: #333;
+          }
+
+          .job-info {
+               background-color: #e9f4ff;
+               border: 1px solid #c2e0ff;
+               padding: 1rem;
+               border-radius: 5px;
+               margin-bottom: 1.5rem;
+          }
+
+          .job-info h3 {
+               margin-top: 0;
+               margin-bottom: 0.5rem;
+               color: #0056b3;
+          }
+
+          .job-info p {
+               margin: 0.2rem 0;
+               color: #333;
+          }
+
+          .form-group {
+               margin-bottom: 1rem;
+          }
+
+          .form-group label {
+               display: block;
+               margin-bottom: 0.5rem;
+               font-weight: bold;
+               color: #333;
+          }
+
+          .form-group input[type="text"],
+          .form-group input[type="email"],
+          .form-group input[type="tel"],
+          .form-group textarea,
+          .form-group input[type="file"] {
+               width: 100%;
+               padding: 0.8rem;
+               border: 1px solid #ccc;
+               border-radius: 4px;
+               box-sizing: border-box;
+               font-size: 1rem;
+          }
+
+          .form-group textarea {
+               min-height: 120px;
+               resize: vertical;
+          }
+
+          .btn-submit {
+               display: block;
+               width: 100%;
+               padding: 1rem;
+               background-color: #28a745;
+               /* Green for apply */
+               color: white;
+               border: none;
+               border-radius: 4px;
+               font-size: 1.1rem;
+               font-weight: bold;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+          }
+
+          .btn-submit:hover {
+               background-color: #218838;
+          }
+
+          .message {
+               margin-top: 1rem;
+               padding: 0.8rem;
+               border-radius: 4px;
+               font-weight: bold;
+               text-align: center;
+          }
+
+          .message.success {
+               background-color: #d4edda;
+               color: #155724;
+               border: 1px solid #c3e6cb;
+          }
+
+          .message.error {
+               background-color: #f8d7da;
+               color: #721c24;
+               border: 1px solid #f5c6cb;
+          }
+
+          .back-button {
+               display: inline-block;
+               margin-top: 1.5rem;
+               padding: 0.75rem 1.5rem;
+               background-color: #6c757d;
+               color: white;
+               text-decoration: none;
+               border-radius: 5px;
+               font-weight: bold;
+               transition: background-color 0.3s ease;
+          }
+
+          .back-button:hover {
+               background-color: #5a6268;
+          }

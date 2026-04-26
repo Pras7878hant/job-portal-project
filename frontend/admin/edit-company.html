@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Edit Company - Job Portal</title>
+     <link rel="stylesheet" href="../assets/css/style.css">
+     <style>
+          /* Basic styling for forms if not already in style.css */
+          body {
+               font-family: Arial, sans-serif;
+               background-color: #f4f4f4;
+               margin: 0;
+               padding: 20px;
+          }
+
+          .container {
+               max-width: 600px;
+               margin: 20px auto;
+               background-color: #fff;
+               padding: 30px;
+               border-radius: 8px;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          }
+
+          h1 {
+               color: #333;
+               text-align: center;
+               margin-bottom: 30px;
+          }
+
+          .form-group {
+               margin-bottom: 15px;
+          }
+
+          label {
+               display: block;
+               margin-bottom: 5px;
+               font-weight: bold;
+               color: #555;
+          }
+
+          input[type="text"],
+          textarea {
+               width: 100%;
+               padding: 10px;
+               border: 1px solid #ddd;
+               border-radius: 4px;
+               box-sizing: border-box;
+               /* Include padding in width */
+               font-size: 16px;
+          }
+
+          textarea {
+               resize: vertical;
+               /* Allow vertical resizing */
+               min-height: 100px;
+          }
+
+          .btn {
+               background-color: #007bff;
+               color: white;
+               padding: 12px 20px;
+               border: none;
+               border-radius: 5px;
+               cursor: pointer;
+               font-size: 16px;
+               display: block;
+               width: 100%;
+               text-align: center;
+               text-decoration: none;
+               margin-top: 20px;
+          }
+
+          .btn:hover {
+               background-color: #0056b3;
+          }
+
+          .btn.back {
+               background-color: #6c757d;
+               margin-top: 10px;
+          }
+
+          .btn.back:hover {
+               background-color: #5a6268;
+          }
+
+          .message {
+               padding: 10px;
+               margin-bottom: 15px;
+               border-radius: 5px;
+               font-weight: bold;
+               display: none;
+               /* Initially hidden */
+          }
+
+          .message.success {
+               background-color: #d4edda;
+               color: #155724;
+               border: 1px solid #c3e6cb;
+          }
+
+          .message.error {
+               background-color: #f8d7da;
+               color: #721c24;
+               border: 1px solid #f5c6cb;
+          }
+
+          .message.info {
+               background-color: #d1ecf1;
+               color: #0c5460;
+               border: 1px solid #bee5eb;
+          }
+     </style>
+</head>
+
+<body>
+     <nav>
+     </nav>
+     <div class="container">
+          <h1>Edit Company</h1>
+          <div id="message" class="message"></div>
+
+          <form id="editCompanyForm">
+               <div class="form-group">
+                    <label for="companyName">Company Name</label>
+                    <input type="text" id="companyName" name="name" required>
+               </div>
+               <div class="form-group">
+                    <label for="companyDescription">Description</label>
+                    <textarea id="companyDescription" name="description" required></textarea>
+               </div>
+               <div class="form-group">
+                    <label for="companyWebsite">Website</label>
+                    <input type="text" id="companyWebsite" name="website">
+               </div>
+               <div class="form-group">
+                    <label for="companyLocation">Location</label>
+                    <input type="text" id="companyLocation" name="location">
+               </div>
+               <button type="submit" class="btn">Update Company</button>
+          </form>
+          <a href="companies.html" class="btn back">Back to My Companies</a>
+     </div>
+
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="../assets/js/utils.js"></script>
+     <script type="module" src="../assets/js/edit-company.js"></script>
+</body>
+
+</html>

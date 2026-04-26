@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>User Profile - Campus Connect</title>
+     <link rel="stylesheet" href="assets/css/style.css">
+     <link rel="stylesheet" href="assets/css/profile.css">
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="assets/js/utils.js"></script>
+      <script type="module" src="./assets/js/main.js"></script>
+
+</head>
+
+<body>
+     <header class="header-container">
+          <h1>Your Profile</h1>
+          <!-- <button class="logout-btn" onclick="handleLogout()">Logout</button> -->
+     </header>
+
+     <main class="container">
+          <section class="profile-details-section">
+               <h2>Profile Information</h2>
+               <div id="profile-display">
+                    <p><strong>Profile Photo:</strong> <img id="display-profilePhoto" src="" alt="Profile"
+                              style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;"></p>
+                    <p><strong>Full Name:</strong> <span id="display-fullName"></span></p>
+                    <p><strong>Email:</strong> <span id="display-email"></span></p>
+                    <p><strong>Phone:</strong> <span id="display-phone"></span></p>
+                    <p><strong>Bio:</strong> <span id="display-bio"></span></p>
+                    <p><strong>Skills:</strong> <span id="display-skills"></span></p>
+                    <p><strong>Resume:</strong> <a id="display-resume" href="#" target="_blank">View Resume</a></p>
+                    <p><strong>Role:</strong> <span id="display-role"></span></p>
+                    <p><strong>Created At:</strong> <span id="display-createdAt"></span></p>
+                    <p><strong>Updated At:</strong> <span id="display-updatedAt"></span></p>
+               </div>
+               <button id="edit-profile-btn" class="btn-secondary mt-4">Edit Profile</button>
+          </section>
+
+          <section id="profile-edit-section" class="profile-edit-section hidden mt-8">
+               <h2>Edit Profile</h2>
+               <form id="profile-form">
+                    <div class="form-group">
+                         <label for="profilePhotoFile">Upload Profile Photo:</label>
+                         <input type="file" id="profilePhotoFile" name="profilePhoto" accept="image/*">
+                         <small>Current: <img id="current-profilePhoto-url" src="" alt="Profile Photo"
+                                   style="max-width: 100px; max-height: 100px; border-radius: 50%; display: block; margin-top: 5px;"></small>
+                    </div>
+                    <div class="form-group">
+                         <label for="fullName">Full Name:</label>
+                         <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                         <label for="email">Email:</label>
+                         <input type="email" id="email" name="email" disabled>
+                    </div>
+                    <div class="form-group">
+                         <label for="phone">Phone Number:</label>
+                         <input type="text" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                         <label for="bio">Bio:</label>
+                         <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    <div class="form-group">
+                         <label for="skills">Skills (comma-separated):</label>
+                         <input type="text" id="skills" name="skills"
+                              placeholder="e.g., JavaScript, React, Node.js, MongoDB">
+                    </div>
+                    <div class="form-group">
+                         <label for="resumeFile">Upload Resume (PDF, DOCX):</label>
+                         <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx">
+                         <small>Current: <a id="current-resume-url" href="#" target="_blank">View Resume</a></small>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="password">New Password (optional):</label>
+                         <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                         <label for="confirmPassword">Confirm New Password:</label>
+                         <input type="password" id="confirmPassword" name="confirmPassword">
+                    </div>
+                    <button type="submit" class="btn-submit">Save Changes</button>
+                    <button type="button" id="cancel-edit-btn" class="btn-secondary ml-2">Cancel</button>
+                    <div id="message" class="message mt-4" style="display: none;"></div>
+               </form>
+          </section>
+     </main>
+     <script type="module" src="./assets/js/profile.js"></script>
+</body>
+
+</html>

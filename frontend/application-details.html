@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="Cache-Control" content="no-store">
+     <title>Application Details</title>
+     <link rel="stylesheet" href="../assets/css/style.css">
+     <link rel="stylesheet" href="./assets/css/admin-companies.css">
+     <script type="module" src="assets/js/main.js"></script>
+     
+</head>
+
+<body>
+    <div class="body">
+     <div class="container">
+          <h2>Application Details</h2>
+          <div id="application-details">
+               <p id="loading-message">Loading application details...</p>
+               <p id="error-message" style="display: none; color: red;"></p>
+          </div>
+          <a id="backToJobsBtn" href="javascript:void(0);" class="back-button">Back to Jobs</a>
+     </div>
+    </div>
+     <script>
+          // Define API endpoints directly within this script
+          const BASE_API_URL = 'http://localhost:8000/api/v1'; // Adjust if your base URL is different
+          const APPLICATION_API_END_POINT = `${BASE_API_URL}/application`;
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const applicationId = urlParams.get('id');
+          const userRole = localStorage.getItem('userRole') || localStorage.getItem('role');
+          const token = localStorage.getItem('token');
+          // Get reference to the back button
+          const backToJobsBtn = document.getElementById('backToJobsBtn');
+
+          // Check user authentication and set back button path immediately
+          if (!userRole || !token) {
+               alert("You are not logged in.");
+               window.location.href = 'login.html'; // Redirect to login if not logged in
+          } else {
+               // Dynamically set the href for the "Back to Jobs" button based on user role
+               // Ensure these paths are correct relative to application-details.html
+               if (userRole === 'student') {
+                    backToJobsBtn.href = './browse.html'; // Example path for student's job listing
+               } else if (userRole === 'recruiter') {
+                    backToJobsBtn.href = './jobs.html'; // Example path for recruiter's dashboard/job listings
+               } else {
+                    // Fallback for unexpected roles or if you have a generic jobs page
+                    backToJobsBtn.href = './jobs.html'; // Adjust this to your general jobs listing page if it exists
+               }
+          }
+
+
+          async function fetchApplicationDetails() {
+               const detailsDiv = document.getElementById('application-details');
+               const loadingMessage = document.getElementById('loading-message');
+               const errorMessage = document.getElementById('error-message');
+
+               loadingMessage.style.display = 'block';
+
+               if (!applicationId) {
+                    loadingMessage.style.display = 'none';
+                    errorMessage.textContent = 'Application ID is missing from the URL.';
+                    errorMessage.style.display = 'block';
+                    return;
+               }
+
+               try {
+                    // Fetch application details using the defined APPLICATION_API_END_POINT
+                    const response = await fetch(`${APPLICATION_API_END_POINT}/${applicationId}`, {
+                         method: 'GET',
+                         headers: {
+                              'Authorization': `Bearer ${token}`
+                         },
+                         credentials: 'include'
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                         const error = new Error(data.message || 'An error occurred while fetching details.');
+                         error.status = response.status;
+                         throw error;
+                    }
+
+                    if (data.success) {
+                         const application = data.application;
+                         const applicant = application.applicant;
+                         const job = application.job;
+                         const appliedDate = application.appliedAt || application.createdAt;
+
+                         loadingMessage.style.display = 'none';
+
+                         detailsDiv.innerHTML = `
+                        <div class="detail-group">
+                            <h3>Job Information</h3>
+                            <p><strong>Job Title:</strong> ${job.title}</p>
+                            <p><strong>Company:</strong> ${job.company?.name || 'N/A'}</p>
+                            <p><strong>Location:</strong> ${job.location}</p>
+                            <p><strong>Job Type:</strong> ${job.jobType}</p>
+                            <p><strong>Salary:</strong> ${job.salary ? '$' + job.salary.toLocaleString() : 'N/A'}</p>
+                            <p><strong>Experience Level:</strong> ${job.experienceLevel || 'N/A'}</p>
+                        </div>
+
+                        <div class="detail-group">
+                            <h3>Applicant Information</h3>
+                            <p><strong>Name:</strong> ${applicant.fullName}</p>
+                            <p><strong>Email:</strong> ${applicant.email}</p>
+                            <p><strong>Phone:</strong> ${applicant.phone || 'N/A'}</p>
+                            ${applicant.resume ? `<p><strong>Resume:</strong> <a href="${applicant.resume}" target="_blank" class="resume-link">View Resume</a></p>` : '<p><strong>Resume:</strong> Not provided</p>'}
+                        </div>
+
+                        <div class="detail-group">
+                            <h3>Skills</h3>
+                            <p>${applicant.skills && applicant.skills.length > 0 ? applicant.skills.join(', ') : 'No skills listed'}</p>
+                        </div>
+
+                        <div class="detail-group">
+                            <h3>Education</h3>
+                            ${applicant.education && applicant.education.length > 0 ?
+                                   applicant.education.map(edu => `
+                                <div class="education-item">
+                                    <p><strong>Degree:</strong> ${edu.degree}</p>
+                                    <p><strong>Institution:</strong> ${edu.institution}</p>
+                                    <p><strong>Year:</strong> ${edu.year}</p>
+                                </div>
+                                `).join('') :
+                                   '<p>No education listed</p>'
+                              }
+                        </div>
+
+                        <div class="detail-group">
+                            <h3>Experience</h3>
+                            ${applicant.experience && applicant.experience.length > 0 ?
+                                   applicant.experience.map(exp => `
+                                <div class="experience-item">
+                                    <p><strong>Title:</strong> ${exp.title}</p>
+                                    <p><strong>Company:</strong> ${exp.company}</p>
+                                    <p><strong>Years:</strong> ${exp.years}</p>
+                                    ${exp.description ? `<p><strong>Description:</strong> ${exp.description}</p>` : ''}
+                                </div>
+                                `).join('') :
+                                   '<p>No experience listed</p>'
+                              }
+                        </div>
+
+                        <div class="detail-group">
+                            <h3>Application Status</h3>
+                            <p><strong>Current Status:</strong> ${application.status.charAt(0).toUpperCase() + application.status.slice(1)}</p>
+                            <p><strong>Applied On:</strong> ${appliedDate ? new Date(appliedDate).toLocaleDateString() : 'N/A'}</p>
+                        </div>
+                    `;
+                    } else {
+                         loadingMessage.style.display = 'none';
+                         errorMessage.textContent = data.message || 'Failed to load application details.';
+                         errorMessage.style.display = 'block';
+                    }
+
+               } catch (error) {
+                    console.error('Error fetching application details:', error);
+                    loadingMessage.style.display = 'none';
+                    errorMessage.textContent = error.message || 'An error occurred while fetching details.';
+
+                    if (error.status === 401) {
+                         alert("Session expired. Please log in again.");
+                         localStorage.removeItem('user');
+                         localStorage.removeItem('token');
+                         localStorage.removeItem('role');
+                         localStorage.removeItem('userRole');
+                         window.location.href = 'login.html';
+                    } else if (error.status === 403) {
+                         errorMessage.textContent = error.message || 'You are not authorized to view this application.';
+                         console.error('Application details authorization failed:', {
+                              status: error.status,
+                              applicationId,
+                              userRole,
+                              hasToken: Boolean(token)
+                         });
+                    }
+
+                    errorMessage.style.display = 'block';
+               }
+          }
+
+          // Fetch details when the DOM is fully loaded
+          document.addEventListener('DOMContentLoaded', fetchApplicationDetails);
+     </script>
+</body>
+
+</html>

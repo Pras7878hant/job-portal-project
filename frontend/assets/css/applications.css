@@ -1,0 +1,483 @@
+
+ 
+          /* General Body and Layout */
+          /* body {
+               font-family: Arial, sans-serif;
+               background-color: #f3f4f6;
+               margin: 0;
+               min-height: 100vh;
+               display: flex;
+               flex-direction: column;
+          }
+
+          header,
+          footer {
+               background-color: #3b82f6;
+              
+               color: white;
+               padding: 1rem 0;
+          }
+
+          .navbar {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               max-width: 1200px;
+              
+               margin: 0 auto;
+               padding: 0 1rem;
+          }
+
+          .brand-logo {
+               font-size: 1.5rem;
+               font-weight: bold;
+               text-decoration: none;
+               color: white;
+          }
+
+          .nav-list {
+               list-style: none;
+               margin: 0;
+               padding: 0;
+               display: flex;
+          }
+
+          .nav-list li {
+               margin-left: 1.5rem;
+          }
+
+          .nav-list a {
+               text-decoration: none;
+               color: white;
+               padding: 0.5rem 0;
+               transition: opacity 0.3s ease;
+          }
+
+          .nav-list a:hover {
+               opacity: 0.8;
+          }
+
+          main {
+               flex: 1;
+               padding: 2rem 1rem;
+               max-width: 1200px;
+               margin: 0 auto;
+               width: 100%;
+               box-sizing: border-box;
+          }
+
+          h4 {
+               text-align: center;
+               font-size: 2rem;
+               color: #333;
+               margin-top: 2rem;
+               margin-bottom: 2rem;
+          } */
+
+          /* Application Cards Grid */
+          /* .applications-grid {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+              
+               gap: 1.5rem;
+              
+          }
+
+          .app-card {
+               background-color: #fff;
+               border-radius: 8px;
+               box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              
+               overflow: hidden;
+               
+               display: flex;
+               flex-direction: column;
+               justify-content: space-between;
+               
+               min-height: 180px;
+               
+          }
+
+          .app-card-content {
+               padding: 1.25rem;
+               flex-grow: 1;
+              
+          }
+
+          .app-card-title {
+               font-size: 1.4rem;
+               font-weight: bold;
+               color: #3b82f6;
+        
+               margin-top: 0;
+               margin-bottom: 0.5rem;
+               white-space: nowrap;
+               overflow: hidden;
+               text-overflow: ellipsis;
+               
+          }
+
+          .app-card-content p {
+               font-size: 0.95em;
+              
+               color: #555;
+               margin: 0.25rem 0;
+          } */
+
+          /*.app-card-footer {
+               padding: 1rem 1.25rem;
+               border-top: 1px solid #eee;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               flex-wrap: wrap;
+               
+               gap: 0.5rem;
+          }*/
+
+          /* Status Tag Styles */
+          /* .application-status-tag {
+               padding: 6px 10px;
+               border-radius: 20px;
+             
+               font-weight: bold;
+               color: white;
+               font-size: 0.85em;
+               text-transform: capitalize;
+               
+          } */
+
+          /* .status-pending {
+               background-color: #ff9800;
+          } */
+
+          /* Orange */
+          /* .status-reviewed {
+               background-color: #2196f3;
+          } */
+
+          /* Blue */
+          /* .status-interview {
+               background-color: #8bc34a;
+          } */
+
+          /* Light Green */
+          /* .status-accepted {
+               background-color: #4caf50;
+          } */
+
+          /* Green */
+          /* .status-rejected {
+               background-color: #f44336;
+          } */
+
+          /* Red */
+
+          /* Buttons */
+          /* .app-button {
+               display: inline-block;
+               padding: 0.6rem 1.2rem;
+               border-radius: 5px;
+               text-decoration: none;
+               font-weight: bold;
+               transition: background-color 0.3s ease;
+               white-space: nowrap;
+               
+               font-size: 0.9em;
+          } */
+
+          /* .app-button-primary {
+               background-color: #007bff;
+              
+               color: white;
+               border: 1px solid #007bff;
+          }
+
+          .app-button-primary:hover {
+               background-color: #0056b3;
+          }
+
+          .app-button-secondary {
+               background-color: #6c757d;
+          
+               color: white;
+               border: 1px solid #6c757d;
+          }
+
+          .app-button-secondary:hover {
+               background-color: #5a6268;
+          } */
+
+          /* .logout-btn {
+               display: block;
+               margin: 2rem auto;
+               width: 200px;
+               padding: 0.75rem;
+               background-color: #dc3545;
+               
+               color: white;
+               border: none;
+               border-radius: 4px;
+               font-size: 1rem;
+               font-weight: bold;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+          }
+
+          .logout-btn:hover {
+               background-color: #c82333;
+          }
+
+          .text-center {
+               text-align: center;
+          }
+
+          .text-danger {
+               color: #f44336;
+          } */
+
+          /* Footer specific styles */
+          /* .page-footer .container {
+               max-width: 1200px;
+          }
+
+          .footer-copyright {
+               background-color: rgba(0, 0, 0, 0.2);
+               padding: 0.75rem 0;
+               font-size: 0.9em;
+          }
+
+          .footer-copyright .container {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+          }
+
+          .footer-copyright a {
+               color: rgba(255, 255, 255, 0.7);
+               text-decoration: none;
+          }
+
+          .footer-copyright a:hover {
+               color: white;
+          } */
+
+          /* Responsive adjustments*/
+         /* @media (max-width: 600px) {
+               .navbar {
+                    flex-direction: column;
+                    align-items: flex-start;
+               }
+
+               .nav-list {
+                    margin-top: 1rem;
+                    flex-direction: column;
+                    align-items: flex-start;
+               }
+
+               .nav-list li {
+                    margin: 0.5rem 0;
+               }
+
+               .app-card-footer {
+                    flex-direction: column;
+                    align-items: stretch;
+               }
+
+               .app-button {
+                    width: 100%;
+                    text-align: center;
+               }
+          }
+      */
+
+
+
+
+
+
+
+/* 
+#applications-list > div {
+     transition: all 0.3s ease;
+}
+#applications-list > div:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} */
+
+
+
+
+
+
+
+
+
+.applications-page {
+     font-family: Arial, sans-serif;
+     background-color: #f3f4f6;
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+     padding: 2rem 1rem;
+     box-sizing: border-box;
+     max-width: 1200px;
+     margin: 0 auto;
+}
+
+.applications-page h4 {
+     text-align: center;
+     font-size: 2rem;
+     color: #333;
+     margin: 2rem 0;
+}
+
+.applications-page .applications-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+     gap: 1.5rem;
+}
+
+.applications-page .app-card {
+     background-color: #fff;
+     border-radius: 8px;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+     overflow: hidden;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     min-height: 180px;
+     transition: all 0.3s ease;
+}
+
+.applications-page .app-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.applications-page .app-card-content {
+     padding: 1.25rem;
+     flex-grow: 1;
+}
+
+.applications-page .app-card-title {
+     font-size: 1.4rem;
+     font-weight: bold;
+     color: #3b82f6;
+     margin: 0 0 0.5rem 0;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+
+.applications-page .app-card-content p {
+     font-size: 0.95em;
+     color: #555;
+     margin: 0.25rem 0;
+}
+
+.applications-page .app-card-footer {
+     padding: 1rem 1.25rem;
+     border-top: 1px solid #eee;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex-wrap: wrap;
+     gap: 0.5rem;
+}
+
+.applications-page .application-status-tag {
+     padding: 6px 10px;
+     border-radius: 20px;
+     font-weight: bold;
+     color: white;
+     font-size: 0.85em;
+     text-transform: capitalize;
+}
+
+.applications-page .status-pending {
+     background-color: #ff9800;
+}
+.applications-page .status-reviewed {
+     background-color: #2196f3;
+}
+.applications-page .status-interview {
+     background-color: #8bc34a;
+}
+.applications-page .status-accepted {
+     background-color: #4caf50;
+}
+.applications-page .status-rejected {
+     background-color: #f44336;
+}
+
+.applications-page .app-button {
+     display: inline-block;
+     padding: 0.6rem 1.2rem;
+     border-radius: 5px;
+     text-decoration: none;
+     font-weight: bold;
+     transition: background-color 0.3s ease;
+     white-space: nowrap;
+     font-size: 0.9em;
+}
+
+.applications-page .app-button-primary {
+     background-color: #007bff;
+     color: white;
+     border: 1px solid #007bff;
+}
+
+.applications-page .app-button-primary:hover {
+     background-color: #0056b3;
+}
+
+.applications-page .app-button-secondary {
+     background-color: #6c757d;
+     color: white;
+     border: 1px solid #6c757d;
+}
+
+.applications-page .app-button-secondary:hover {
+     background-color: #5a6268;
+}
+
+.applications-page .logout-btn {
+     display: block;
+     margin: 2rem auto;
+     width: 200px;
+     padding: 0.75rem;
+     background-color: #dc3545;
+     color: white;
+     border: none;
+     border-radius: 4px;
+     font-size: 1rem;
+     font-weight: bold;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+}
+
+.applications-page .logout-btn:hover {
+     background-color: #c82333;
+}
+
+.applications-page .text-center {
+     text-align: center;
+}
+
+.applications-page .text-danger {
+     color: #f44336;
+}
+
+@media (max-width: 600px) {
+     .applications-page .app-card-footer {
+          flex-direction: column;
+          align-items: stretch;
+     }
+
+     .applications-page .app-button {
+          width: 100%;
+          text-align: center;
+     }
+}
