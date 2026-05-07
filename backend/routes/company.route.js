@@ -1,5 +1,3 @@
-// Path: backend/routes/company.route.js
-
 import express from "express";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 // Import deleteCompany as well

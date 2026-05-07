@@ -97,7 +97,7 @@ export const applyForJob = async (req, res) => {
 export const checkApplicationStatus = async (req, res) => {
      try {
           const { jobId } = req.params;
-          const studentId = req.id; // User ID from isAuthenticated middleware
+          const studentId = req.id;
 
           if (!studentId) {
                return res.status(401).json({
@@ -120,14 +120,14 @@ export const checkApplicationStatus = async (req, res) => {
           if (existingApplication) {
                return res.status(200).json({
                     message: "You have already applied for this job.",
-                    applied: true, // Frontend expects 'applied' boolean
+                    applied: true,
                     status: existingApplication.status,
                     success: true
                });
           } else {
                return res.status(200).json({
                     message: "You have not applied for this job yet.",
-                    applied: false, // Frontend expects 'applied' boolean
+                    applied: false,
                     success: true
                });
           }
@@ -154,7 +154,7 @@ export const getAppliedJobs = async (req, res) => {
                     path: 'company',
                     select: 'name'
                },
-               select: 'title company location jobType' // Select fields you need from the job
+               select: 'title company location jobType'
           });
 
           if (!applications || applications.length === 0) {
@@ -180,7 +180,7 @@ export const getAppliedJobs = async (req, res) => {
 
 export const getApplicants = async (req, res) => {
      try {
-          const { jobId } = req.params; // Changed from id to jobId to match route
+          const { jobId } = req.params;
           const recruiterId = req.id;
 
           if (!recruiterId) {
@@ -207,7 +207,7 @@ export const getApplicants = async (req, res) => {
           const applications = await Application.find({ job: jobId })
                .populate({
                     path: 'applicant',
-                    select: 'fullName email phone skills education experience' // Select specific user fields for applicant
+                    select: 'fullName email phone skills education experience'
                })
                .sort({ appliedAt: -1 })
                .lean();
@@ -241,7 +241,7 @@ export const getApplicants = async (req, res) => {
 export const updateApplicationStatus = async (req, res) => {
      try {
           const { status } = req.body;
-          const { applicationId } = req.params; // Changed from id to applicationId to match route
+          const { applicationId } = req.params;
           const recruiterId = req.id;
 
           if (!applicationId) {
@@ -261,7 +261,7 @@ export const updateApplicationStatus = async (req, res) => {
 
           const application = await Application.findById(applicationId).populate({
                path: 'job',
-               select: 'created_by' // Only need created_by from job to check authorization
+               select: 'created_by'
           });
 
           if (!application) {
@@ -302,7 +302,7 @@ export const updateApplicationStatus = async (req, res) => {
 
 export const getApplicationDetails = async (req, res) => {
      try {
-          const { applicationId } = req.params; // Changed from id to applicationId to match route
+          const { applicationId } = req.params;
           const userId = req.id;
           const role = req.role;
 
@@ -319,17 +319,17 @@ export const getApplicationDetails = async (req, res) => {
           const application = await Application.findById(applicationId)
                .populate({
                     path: 'job',
-                    select: 'title company location jobType salary experienceLevel created_by', // Select job details
+                    select: 'title company location jobType salary experienceLevel created_by',
                     populate: {
                          path: 'company',
-                         select: 'name' // Populate company name within job
+                         select: 'name'
                     }
                })
                .populate({
                     path: 'applicant',
-                    select: 'fullName email resume phone skills education experience' // Select applicant details
+                    select: 'fullName email resume phone skills education experience'
                })
-               .lean(); // Use .lean() for faster query execution
+               .lean(); // for faster query execution
 
           if (!application) {
                return res.status(404).json({

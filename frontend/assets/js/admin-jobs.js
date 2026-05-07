@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                jobType: document.getElementById('job-type').value,
                experienceLevel: document.getElementById('job-experience-level').value,
                position: document.getElementById('job-position').value,
-               companyId: document.getElementById('job-company').value, // Changed to companyId
+               companyId: document.getElementById('job-company').value,
                location: document.getElementById('job-location').value,
                salary: Number(document.getElementById('job-salary').value),
           };

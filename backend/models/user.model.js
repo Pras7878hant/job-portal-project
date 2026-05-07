@@ -1,10 +1,14 @@
-// backend/models/user.model.js
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
      fullName: {
           type: String,
           default: ""
+     },
+     username: {
+          type: String,
+          unique: true,
+          sparse: true
      },
      email: {
           type: String,
@@ -40,6 +44,14 @@ const userSchema = new mongoose.Schema({
      resume: {
           type: String,
           default: ""
+     },
+     isPortfolioPublic: {
+          type: Boolean,
+          default: false
+     },
+     portfolioTheme: {
+          type: String,
+          default: 'light'
      }
 }, { timestamps: true });
 

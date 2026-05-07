@@ -21,12 +21,12 @@ export const register = async (req, res) => {
           }
 
           let profilePhoto = '';
-         
-          if (req.file) { 
+
+          if (req.file) {
                const fileUri = getDataUri(req.file);
                const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
                profilePhoto = cloudResponse.secure_url;
-            
+
           }
 
           const existingUser = await User.findOne({ email });
@@ -39,15 +39,23 @@ export const register = async (req, res) => {
 
           const hashedPassword = await bcrypt.hash(password, 10);
 
+          // Generate unique username based on full name
+          const baseUsername = fullName.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const randomNum = Math.floor(1000 + Math.random() * 9000);
+          const username = `${baseUsername}${randomNum}`;
+
           await User.create({
                fullName,
+               username,
                email,
                phone,
                password: hashedPassword,
                role,
                profilePhoto: profilePhoto || '/assets/images/default-avatar.jpg',
                bio: '',
-               skills: []
+               skills: [],
+               isPortfolioPublic: false,
+               portfolioTheme: 'light'
           });
 
           return res.status(201).json({
@@ -106,13 +114,16 @@ export const login = async (req, res) => {
           const userToSend = {
                _id: user._id,
                fullName: user.fullName,
+               username: user.username,
                email: user.email,
                phone: user.phone,
                role: user.role,
                profilePhoto: user.profilePhoto,
                bio: user.bio,
                skills: user.skills,
-               resume: user.resume
+               resume: user.resume,
+               isPortfolioPublic: user.isPortfolioPublic,
+               portfolioTheme: user.portfolioTheme
           };
 
           return res.status(200)
@@ -159,19 +170,39 @@ export const getProfile = async (req, res) => {
           const userProfile = {
                _id: user._id,
                fullName: user.fullName || '',
+               username: user.username || '',
                email: user.email,
                phone: user.phone || '',
                role: user.role,
                profilePhoto: user.profilePhoto || '/assets/images/default-avatar.jpg',
                bio: user.bio || '',
                skills: user.skills || [],
-               resume: user.resume || ''
+               resume: user.resume || '',
+               isPortfolioPublic: user.isPortfolioPublic || false,
+               portfolioTheme: user.portfolioTheme || 'light'
           };
 
           res.status(200).json({ user: userProfile, success: true });
      } catch (error) {
           console.error('Error fetching profile:', error);
           res.status(500).json({ message: "Internal Server Error while fetching profile.", success: false, error: error.message });
+     }
+};
+
+export const getPublicProfile = async (req, res) => {
+     try {
+          const { username } = req.params;
+
+          const user = await User.findOne({ username, isPortfolioPublic: true }).select('-password -email -phone');
+
+          if (!user) {
+               return res.status(404).json({ message: "Portfolio not found or is set to private.", success: false });
+          }
+
+          res.status(200).json({ user, success: true });
+     } catch (error) {
+          console.error('Error fetching public profile:', error);
+          res.status(500).json({ message: "Server error", success: false });
      }
 };
 
@@ -193,12 +224,16 @@ export const updateProfile = async (req, res) => {
                phone,
                bio,
                skills,
-               password
+               password,
+               isPortfolioPublic,
+               portfolioTheme
           } = req.body;
 
           if (fullName !== undefined) user.fullName = fullName;
           if (phone !== undefined) user.phone = phone;
           if (bio !== undefined) user.bio = bio;
+          if (isPortfolioPublic !== undefined) user.isPortfolioPublic = isPortfolioPublic;
+          if (portfolioTheme !== undefined) user.portfolioTheme = portfolioTheme;
 
           if (skills !== undefined) {
                if (Array.isArray(skills)) {
@@ -224,7 +259,7 @@ export const updateProfile = async (req, res) => {
                     const publicIdMatch = user.profilePhoto.match(/\/profile_photos\/([^/.]+)\./);
                     if (publicIdMatch && publicIdMatch[1]) {
                          const publicId = `profile_photos/${publicIdMatch[1]}`;
-                         await cloudinary.uploader.destroy(publicId).catch(() => {});
+                         await cloudinary.uploader.destroy(publicId).catch(() => { });
                     }
                }
 
@@ -243,7 +278,7 @@ export const updateProfile = async (req, res) => {
                     const publicIdMatch = user.resume.match(/\/resumes\/([^/.]+)\./);
                     if (publicIdMatch && publicIdMatch[1]) {
                          const publicId = `resumes/${publicIdMatch[1]}`;
-                         await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' }).catch(() => {});
+                         await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' }).catch(() => { });
                     }
                }
 
@@ -260,6 +295,7 @@ export const updateProfile = async (req, res) => {
           const updatedUser = {
                _id: user._id,
                fullName: user.fullName,
+               username: user.username,
                email: user.email,
                phone: user.phone,
                role: user.role,
@@ -267,6 +303,8 @@ export const updateProfile = async (req, res) => {
                bio: user.bio,
                skills: user.skills,
                resume: user.resume,
+               isPortfolioPublic: user.isPortfolioPublic,
+               portfolioTheme: user.portfolioTheme,
                createdAt: user.createdAt,
                updatedAt: user.updatedAt
           };
@@ -320,7 +358,7 @@ export const getAllApplicants = async (req, res) => {
           const applicants = await User.find({
                'appliedJobs.job': { $in: postedJobIds }
           })
-               .select('fullName email phone resume appliedJobs')
+               .select('fullName email phone resume appliedJobs profilePhoto')
                .populate({
                     path: 'appliedJobs.job',
                     match: { _id: { $in: postedJobIds } },
@@ -343,7 +381,8 @@ export const getAllApplicants = async (req, res) => {
                                    fullName: applicant.fullName,
                                    email: applicant.email,
                                    phone: applicant.phone,
-                                   resume: applicant.resume
+                                   resume: applicant.resume,
+                                   profilePhoto: applicant.profilePhoto // Included for blind screening toggle
                               },
                               appliedDate: app.appliedDate,
                               status: app.status

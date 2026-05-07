@@ -15,37 +15,37 @@ const jobSchema = new mongoose.Schema(
                type: [String],
                required: true
           },
-          salary: { // <-- Is it exactly 'salary'?
+          salary: {
                type: Number,
                required: true,
                min: 0
           },
-          location: { // <-- Is it exactly 'location'?
+          location: {
                type: String,
                required: true,
                trim: true
           },
-          jobType: { // This one is already saving, so it's correct
+          jobType: {
                type: String,
                required: true,
                enum: ['Full-Time', 'Part-Time', 'Contract', 'Temporary', 'Internship']
           },
-          experienceLevel: { // This one is already saving, so it's correct
+          experienceLevel: {
                type: String,
                required: true,
                enum: ['Entry-Level', 'Mid-Level', 'Senior-Level', 'Director', 'Executive']
           },
-          position: { // <-- Is it exactly 'position'?
+          position: {
                type: String,
                required: true,
                trim: true
           },
-          company: { // <-- Is it exactly 'company' here? Not 'companyId' or something else?
+          company: {
                type: mongoose.Schema.Types.ObjectId,
                ref: 'Company',
                required: true
           },
-          created_by: { // <-- Is it exactly 'created_by' here? Not 'userId' or 'recruiterId'?
+          created_by: {
                type: mongoose.Schema.Types.ObjectId,
                ref: 'User',
                required: true

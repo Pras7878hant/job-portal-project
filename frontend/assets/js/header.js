@@ -11,7 +11,7 @@ export function loadHeader() {
       <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         <a href="${basePath}/index.html">
-          <img class="h-10 w-auto" src="${basePath}/assets/images/myLogo.png" alt="Skratchr">
+          <img class="h-16 w-auto object-contain" src="${basePath}/assets/images/myLogo.png" alt="Skratchr">
         </a>
 
         <button class="rounded-md p-2 text-slate-700 md:hidden" onclick="toggleNav()" aria-label="Open navigation">
@@ -157,7 +157,7 @@ function navClass(currentPath, slug) {
   const active = currentPath.includes(slug);
 
   return `rounded-md px-3 py-2 text-sm font-medium ${active
-      ? "bg-slate-950 text-white"
-      : "text-slate-700 hover:bg-slate-100"
+    ? "bg-slate-950 text-white"
+    : "text-slate-700 hover:bg-slate-100"
     }`;
 }

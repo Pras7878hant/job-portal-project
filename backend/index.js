@@ -10,6 +10,7 @@ import userRoute from "./routes/user.route.js";
 import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
+import path from 'path';
 
 const app = express();
 
@@ -47,6 +48,10 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
+
+app.get('/p/*', (req, res) => {
+  res.sendFile(path.resolve('frontend/portfolio.html'));
+});
 
 app.listen(PORT, async () => {
   await connectDB();

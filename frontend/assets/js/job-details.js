@@ -13,11 +13,11 @@ async function fetchJobDetails() {
           return;
      }
 
-     const role = localStorage.getItem('role'); // Get role from localStorage
+     const role = localStorage.getItem('role');
      const token = localStorage.getItem('token');
 
      try {
-          axios.defaults.withCredentials = true; // Essential for sending cookies with Axios
+          axios.defaults.withCredentials = true;
 
           const response = await axios.get(`${JOB_API_END_POINT}/${jobId}`);
           const job = response.data.job;
