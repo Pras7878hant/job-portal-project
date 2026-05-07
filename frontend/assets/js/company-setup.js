@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           return;
      } else if (userRole !== 'recruiter') {
           alert("You are not authorized to register companies.");
-          window.location.href = userRole === 'student' ? '../student/dashboard.html' : '../browse.html';
+          window.location.href = '../browse.html';
           return;
      }
 
@@ -51,7 +51,7 @@ companySetupForm.addEventListener('submit', async (event) => {
      if (companyWebsite) {
           requestBody.website = companyWebsite;
      }
-     if (companyLocation) { // New: Add location to request body if it exists
+     if (companyLocation) {
           requestBody.location = companyLocation;
      }
 

@@ -1,102 +1,65 @@
-
-// import { isAuthenticatedFrontend, handleLogout, APPLICATION_API_END_POINT } from './utils.js';
-
-import {
-    isAuthenticatedFrontend,
-    handleLogout,
-    APPLICATION_API_END_POINT,
-    authFetch
-} from './utils.js';
-
-
+import { isAuthenticatedFrontend, handleLogout, APPLICATION_API_END_POINT, authFetch } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-     // Check if the user is authenticated (using the function from utils.js)
      if (!isAuthenticatedFrontend()) {
-          window.location.href = 'login.html'; // Redirect to login if not authenticated
-          return; // Stop execution
-     }
-
-     // Ensure the user is a 'student' to view applications
-     const userRole = localStorage.getItem('userRole');
-     if (userRole !== 'student') {
-          // Redirect or show an error if not a student
-          alert('Access Denied: Only students can view this page.');
-          window.location.href = 'index.html'; // Or a more appropriate page
+          window.location.href = 'login.html';
           return;
      }
 
-     // Removed: M.AutoInit(); (Materialize JS is no longer used)
+     const userRole = localStorage.getItem('userRole');
+     if (userRole !== 'student') {
+          window.location.href = 'index.html';
+          return;
+     }
 
-     // Fetch and display applied jobs when the page loads
      await fetchAppliedJobs();
 
-     // Attach logout functionality to the logout button
      const logoutButton = document.getElementById('logoutButton');
-     if (logoutButton) {
-          logoutButton.addEventListener('click', handleLogout); // handleLogout is exposed globally from utils.js
-     }
+     if (logoutButton) logoutButton.addEventListener('click', handleLogout);
 });
 
 async function fetchAppliedJobs() {
      const applicationsContainer = document.getElementById('applicationsContainer');
-     applicationsContainer.innerHTML = '<p class="text-center">Loading your applications...</p>';
+     applicationsContainer.innerHTML = '<p class="text-slate-600">Loading your applications...</p>';
 
      try {
           const response = await authFetch(`${APPLICATION_API_END_POINT}/get`);
-          const applications = response.data.applications;
+          const applications = response.data.applications || [];
 
-          if (applications && applications.length > 0) {
-               applicationsContainer.innerHTML = ''; // Clear loading message
-               applications.forEach(app => {
-                    const applicationCard = createApplicationCard(app);
-                    applicationsContainer.appendChild(applicationCard);
-               });
-          } else {
-               applicationsContainer.innerHTML = '<p class="text-center">You have not applied for any jobs yet.</p>';
+          if (!applications.length) {
+               applicationsContainer.innerHTML = '<p class="text-slate-600">You have not applied for any jobs yet.</p>';
+               return;
           }
+
+          applicationsContainer.innerHTML = '';
+          applications.forEach(application => applicationsContainer.appendChild(createApplicationCard(application)));
      } catch (error) {
-          console.error('Error fetching your applications:', error);
-          applicationsContainer.innerHTML = '<p class="text-center text-danger">Error fetching your applications. Please try again later.</p>';
-
-          if (error.response) {
-               if (error.response.status === 401 || error.response.status === 403) {
-                    alert('Session expired or unauthorized. Please log in again.');
-                    handleLogout();
-               } else {
-                    console.error('Backend error:', error.response.data.message || error.response.statusText);
-               }
-          } else if (error.request) {
-               console.error('Network error: No response received from server.');
-          } else {
-               console.error('Frontend error setting up request:', error.message);
-          }
+          applicationsContainer.innerHTML = '<p class="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800">Error fetching your applications. Please try again later.</p>';
+          if (error.response?.status === 401 || error.response?.status === 403) handleLogout();
      }
 }
 
-// MODIFIED: createApplicationCard for simple CSS and improved layout
 function createApplicationCard(application) {
      const card = document.createElement('div');
-     card.classList.add('app-card'); // Custom class for the card
+     card.className = 'rounded-md border border-slate-200 bg-white p-5 shadow-sm';
 
-     // Ensure all nested properties are safely accessed
-     const jobTitle = application.job ? application.job.title : 'N/A';
-     const companyName = (application.job && application.job.company) ? application.job.company.name : 'N/A';
-     const applicationStatus = application.status ? application.status : 'N/A';
+     const jobTitle = application.job?.title || 'N/A';
+     const companyName = application.job?.company?.name || 'N/A';
+     const applicationStatus = application.status || 'pending';
      const appliedAt = application.createdAt ? new Date(application.createdAt).toLocaleDateString() : 'N/A';
-     const jobId = application.job ? application.job._id : '';
+     const jobId = application.job?._id || '';
 
      card.innerHTML = `
-        <div class="app-card-content">
-            <h3 class="app-card-title">${jobTitle}</h3>
-            <p><strong>Company:</strong> ${companyName}</p>
-            <p><strong>Applied On:</strong> ${appliedAt}</p>
+        <div>
+            <h3 class="text-lg font-semibold text-slate-950">${jobTitle}</h3>
+            <p class="mt-2 text-sm text-slate-600"><strong>Company:</strong> ${companyName}</p>
+            <p class="mt-1 text-sm text-slate-600"><strong>Applied On:</strong> ${appliedAt}</p>
         </div>
-        <div class="app-card-footer">
-            <span class="application-status-tag status-${applicationStatus.toLowerCase()}">${applicationStatus}</span>
-            <div>
-                <a href="job-details.html?id=${jobId}" class="app-button app-button-primary">View Job</a>
-                <a href="application-details.html?id=${application._id}&v=2" class="app-button app-button-secondary">View Application</a>
+        <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold capitalize text-slate-700">${applicationStatus}</span>
+            <div class="flex gap-2">
+                <a href="job-details.html?id=${jobId}" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50">View Job</a>
+                <a href="application-details.html?id=${application._id}" class="rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">View Application</a>
             </div>
         </div>
     `;

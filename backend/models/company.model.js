@@ -4,7 +4,7 @@ const companySchema = new mongoose.Schema({
      name: {
           type: String,
           required: true,
-          unique: true
+          trim: true
      },
      description: {
           type: String,
@@ -15,7 +15,7 @@ const companySchema = new mongoose.Schema({
      location: {
           type: String,
           trim: true,
-          required: true
+          default: ""
      },
      userId: {
           type: mongoose.Schema.Types.ObjectId,
@@ -23,4 +23,7 @@ const companySchema = new mongoose.Schema({
           required: true
      }
 }, { timestamps: true })
+
+companySchema.index({ name: 1, userId: 1 }, { unique: true });
+
 export const Company = mongoose.model("Company", companySchema);

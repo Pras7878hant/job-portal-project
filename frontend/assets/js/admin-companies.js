@@ -1,5 +1,3 @@
-// frontend/admin/admin-companies.js
-
 import { COMPANY_API_END_POINT, displayMessage, handleLogout } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -30,8 +28,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
      if (logoutBtn) {
           logoutBtn.addEventListener('click', handleLogout);
-     } else {
-          console.warn("Logout button with ID 'logoutBtn' not found in the HTML. Ensure it exists if you want logout functionality.");
      }
 
      try {
@@ -55,17 +51,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                companies.forEach(company => {
                     const companyCard = document.createElement('div');
-                    companyCard.className = 'bg-white p-4 rounded shadow mb-4';
+                    companyCard.className = 'rounded-md border border-slate-200 bg-white p-5 shadow-sm';
                     companyCard.innerHTML = `
-                    <h2 class="text-xl font-semibold">${company.name}</h2>
-                    <p class="text-gray-600">${company.description || 'No description provided.'}</p>
-                    ${company.website ? `<p class="text-blue-500"><a href="${company.website}" target="_blank" rel="noopener noreferrer">${company.website}</a></p>` : ''}
-                    ${company.location ? `<p class="text-gray-600">Location: ${company.location}</p>` : ''} 
-                    ${company.logo ? `<img src="${company.logo}" alt="${company.name} Logo" class="mt-2 w-16 h-16 object-contain">` : ''}
-                    <p class="text-gray-500 text-sm mt-2">ID: ${company._id}</p>
-                    <div class="mt-3 space-x-2">
-                        <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600" data-company-id="${company._id}">Edit</button>
-                        <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" data-company-id="${company._id}">Delete</button>
+                    <h2 class="text-xl font-semibold text-slate-950">${company.name}</h2>
+                    <p class="mt-2 text-sm leading-6 text-slate-600">${company.description || 'No description provided.'}</p>
+                    ${company.website ? `<p class="mt-2 text-sm"><a class="font-semibold text-slate-950 underline" href="${company.website}" target="_blank" rel="noopener noreferrer">${company.website}</a></p>` : ''}
+                    ${company.location ? `<p class="mt-2 text-sm text-slate-600">Location: ${company.location}</p>` : ''} 
+                    <p class="mt-2 text-xs text-slate-500">ID: ${company._id}</p>
+                    <div class="mt-4 flex gap-2">
+                        <button class="rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800" data-company-id="${company._id}">Edit</button>
+                        <button class="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-50" data-company-id="${company._id}">Delete</button>
                     </div>
                 `;
                     companiesList.appendChild(companyCard);
@@ -85,12 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                displayMessage(response.data.message || 'Failed to fetch companies.', 'error');
           }
      } catch (error) {
-          console.error('Error fetching companies:', error);
-
           if (error.response) {
-               console.error('Server error response data:', error.response.data);
-               console.error('Server error status:', error.response.status);
-
                const backendMessage = error.response.data.message;
 
                if (error.response.status === 401 || error.response.status === 403) {
@@ -114,12 +104,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.editCompany = function (companyId) {
-     console.log(`Edit company with ID: ${companyId}`);
      window.location.href = `edit-company.html?id=${companyId}`;
 };
 
 window.deleteCompany = async function (companyId) {
-     console.log(`Delete company with ID: ${companyId}`);
      if (!confirm('Are you sure you want to delete this company?')) {
           return;
      }
@@ -150,7 +138,6 @@ window.deleteCompany = async function (companyId) {
                displayMessage(response.data.message || 'Failed to delete company.', 'error');
           }
      } catch (error) {
-          console.error('Error deleting company:', error);
           if (error.response) {
                displayMessage(error.response.data.message || 'Error deleting company on server.', 'error');
                if (error.response.status === 401 || error.response.status === 403) {

@@ -1,36 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>My Applications - Job Portal</title>
-     <link rel="stylesheet" href="./assets/css/style.css">
-     <link rel="stylesheet" href="./assets/css/applications.css">
-   
-    
+     <title>My Applications - Skratchr</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="./assets/js/main.js"></script>
 </head>
-
-<body>
-     
-
-     <main  class="applications-page">
-          <h4 class="my-4">My Job Applications</h4>
-          <div class="applications-grid" id="applicationsContainer">
-               <p class="text-center">Loading your applications...</p>
+<body class="min-h-screen bg-slate-50 text-slate-950">
+     <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div class="border-b border-slate-200 pb-6">
+               <h1 class="text-3xl font-bold">My Job Applications</h1>
+               <p class="mt-2 text-slate-600">Track every role you have applied for.</p>
+          </div>
+          <div class="mt-8 grid gap-4 md:grid-cols-2" id="applicationsContainer">
+               <p class="text-slate-600">Loading your applications...</p>
           </div>
      </main>
-
-     
-
-     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-     <script type="module" src="./assets/js/utils.js"></script>
-     
      <script type="module" src="./assets/js/applications.js"></script>
-    <script type="module" src="./assets/js/main.js"></script>
-
- 
-
 </body>
-
 </html>

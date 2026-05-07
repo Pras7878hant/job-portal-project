@@ -3,14 +3,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
-import { Job } from '../models/job.model.js'; // Ensure Job model is imported
-// import fs from 'fs'; // Not needed if using multer.memoryStorage for file uploads
+import { Job } from '../models/job.model.js';
 
 export const register = async (req, res) => {
      try {
           const fullName = req.body.fullName?.trim();
           const email = req.body.email?.trim().toLowerCase();
-          const phone = req.body.phone?.trim();
+          const phone = (req.body.phone || req.body.phoneNumber)?.trim();
           const password = req.body.password?.trim();
           const role = req.body.role?.trim().toLowerCase();
 
@@ -22,13 +21,12 @@ export const register = async (req, res) => {
           }
 
           let profilePhoto = '';
-          // This part of register assumes file upload. If register doesn't handle files, remove this.
-          // If you are using multer.memoryStorage() for register, fs.unlinkSync is not needed.
-          if (req.file) { // This req.file is for single file uploads, usually handled by multer.single()
+         
+          if (req.file) { 
                const fileUri = getDataUri(req.file);
                const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
                profilePhoto = cloudResponse.secure_url;
-               // fs.unlinkSync(req.file.path); // Remove if using memoryStorage
+            
           }
 
           const existingUser = await User.findOne({ email });
@@ -47,7 +45,7 @@ export const register = async (req, res) => {
                phone,
                password: hashedPassword,
                role,
-               profilePhoto: profilePhoto || '../assets/images/default-avatar.jpg', // Default if no upload
+               profilePhoto: profilePhoto || '/assets/images/default-avatar.jpg',
                bio: '',
                skills: []
           });
@@ -146,7 +144,6 @@ export const logout = async (req, res) => {
 
 
 export const getProfile = async (req, res) => {
-     console.log('--- getProfile controller reached ---');
      try {
           const userId = req.id;
           if (!userId) {
@@ -165,7 +162,7 @@ export const getProfile = async (req, res) => {
                email: user.email,
                phone: user.phone || '',
                role: user.role,
-               profilePhoto: user.profilePhoto || '../assets/images/default-avatar.jpg',
+               profilePhoto: user.profilePhoto || '/assets/images/default-avatar.jpg',
                bio: user.bio || '',
                skills: user.skills || [],
                resume: user.resume || ''
@@ -179,11 +176,6 @@ export const getProfile = async (req, res) => {
 };
 
 export const updateProfile = async (req, res) => {
-     console.log('--- updateProfile controller reached ---');
-     console.log('User ID from token:', req.id);
-     console.log('Request body (text fields):', req.body);
-     console.log('Request files (uploaded files):', req.files);
-
      try {
           const userId = req.id;
           if (!userId) {
@@ -210,7 +202,7 @@ export const updateProfile = async (req, res) => {
 
           if (skills !== undefined) {
                if (Array.isArray(skills)) {
-                    user.skills = skills.filter(s => s.trim() !== '');
+                    user.skills = skills.map(s => s.trim()).filter(Boolean);
                } else if (typeof skills === 'string') {
                     user.skills = skills.split(',').map(s => s.trim()).filter(s => s !== '');
                } else {
@@ -225,59 +217,45 @@ export const updateProfile = async (req, res) => {
                user.password = await bcrypt.hash(password, 10);
           }
 
-          // --- Handle file uploads for profilePhoto ---
           if (req.files && req.files['profilePhoto'] && req.files['profilePhoto'][0]) {
                const profilePhotoFile = req.files['profilePhoto'][0];
 
-               // Optional: Delete old profile photo from Cloudinary if it exists
-               // This extracts the public_id from the existing Cloudinary URL
                if (user.profilePhoto && user.profilePhoto.includes('res.cloudinary.com')) {
                     const publicIdMatch = user.profilePhoto.match(/\/profile_photos\/([^/.]+)\./);
                     if (publicIdMatch && publicIdMatch[1]) {
-                         const publicId = `profile_photos/${publicIdMatch[1]}`; // Reconstruct folder/public_id
-                         console.log(`Attempting to delete old profile photo: ${publicId}`);
-                         await cloudinary.uploader.destroy(publicId)
-                              .then(result => console.log('Old profile photo deletion result:', result))
-                              .catch(err => console.error('Error deleting old profile photo:', err));
+                         const publicId = `profile_photos/${publicIdMatch[1]}`;
+                         await cloudinary.uploader.destroy(publicId).catch(() => {});
                     }
                }
 
-               const fileUri = getDataUri(profilePhotoFile); // Convert buffer to data URI
+               const fileUri = getDataUri(profilePhotoFile);
                const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-                    folder: 'profile_photos', // Cloudinary folder name for images
-                    resource_type: 'image' // IMPORTANT: Treat as an image
+                    folder: 'profile_photos',
+                    resource_type: 'image'
                });
-               user.profilePhoto = cloudResponse.secure_url; // Save the new Cloudinary URL
-               console.log('New profile photo uploaded to:', user.profilePhoto);
+               user.profilePhoto = cloudResponse.secure_url;
           }
 
-          // --- Handle file uploads for resume ---
           if (user.role === 'student' && req.files && req.files['resume'] && req.files['resume'][0]) {
                const resumeFile = req.files['resume'][0];
 
-               // Optional: Delete old resume from Cloudinary if it exists
                if (user.resume && user.resume.includes('res.cloudinary.com')) {
                     const publicIdMatch = user.resume.match(/\/resumes\/([^/.]+)\./);
                     if (publicIdMatch && publicIdMatch[1]) {
-                         const publicId = `resumes/${publicIdMatch[1]}`; // Reconstruct folder/public_id
-                         console.log(`Attempting to delete old resume: ${publicId}`);
-                         // IMPORTANT: Use 'raw' resource_type for documents when destroying
-                         await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' })
-                              .then(result => console.log('Old resume deletion result:', result))
-                              .catch(err => console.error('Error deleting old resume:', err));
+                         const publicId = `resumes/${publicIdMatch[1]}`;
+                         await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' }).catch(() => {});
                     }
                }
 
-               const fileUri = getDataUri(resumeFile); // Convert buffer to data URI
+               const fileUri = getDataUri(resumeFile);
                const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-                    folder: 'resumes', // Cloudinary folder name for documents
-                    resource_type: 'raw' // IMPORTANT: Treat as a raw file (PDF, DOCX)
+                    folder: 'resumes',
+                    resource_type: 'raw'
                });
-               user.resume = cloudResponse.secure_url; // Save the new Cloudinary URL
-               console.log('New resume uploaded to:', user.resume);
+               user.resume = cloudResponse.secure_url;
           }
 
-          await user.save(); // Save the updated user document to MongoDB
+          await user.save();
 
           const updatedUser = {
                _id: user._id,

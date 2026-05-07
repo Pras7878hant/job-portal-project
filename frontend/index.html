@@ -4,117 +4,73 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Job Portal - Home</title>
-
-     <link rel="stylesheet" href="assets/css/style.css">
-
-     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap"
-          rel="stylesheet">
-
+     <title>Skratchr - Campus Job Portal</title>
+     <script src="https://cdn.tailwindcss.com"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
      <script type="module" src="assets/js/main.js"></script>
-     <!-- <script src="assets/js/navbar.js"></script> -->
-
-
-     <title>Skratchr</title>
 </head>
 
-</head>
-
-<body>
-     <div class="divider">
-          <div>
-               <h1 class="header-title">UNLOCK YOUR <br> <span>POTENTIAL WITH </span> <br>TOP JOB LISTINGS.</h1>
-          </div>
-          <div>
-               <img class="headerImg" src="./assets/images/headerbg.png" alt="Code2Career">
-          </div>
-     </div>
-
+<body class="min-h-screen bg-slate-50 text-slate-950">
      <main>
-    <h1 class="mission">Our Mission & Vision</h1>
+          <section class="relative overflow-hidden bg-white">
+               <div
+                    class="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
+                    <div class="max-w-2xl">
+                         <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-slate-500">Campus hiring
+                              made practical</p>
+                         <h1 class="text-4xl font-bold leading-tight text-slate-950 sm:text-6xl">Find serious
+                              opportunities without the noise.</h1>
+                         <p class="mt-6 text-lg leading-8 text-slate-600">Skratchr helps students discover relevant jobs
+                              and recruiters manage companies, postings, and applications from one clean workspace.</p>
+                         <div class="mt-8 flex flex-wrap gap-3">
+                              <a href="browse.html"
+                                   class="rounded-md bg-slate-950 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">Browse
+                                   Jobs</a>
+                              <a href="signup.html"
+                                   class="rounded-md border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-100">Create
+                                   Account</a>
+                         </div>
+                    </div>
+                    <div class="relative">
+                         <img src="./assets/images/headerbg.png" alt="Students working on careers"
+                              class="w-full rounded-lg border border-slate-200 object-cover shadow-sm">
+                    </div>
+               </div>
+          </section>
 
-          <div class="container">
-               <section class="card card1">
-                    <div class="content">
-                         <h1>Connecting Ambition with Opportunity</h1>
-                         <p>Mission: To create a platform where talent meets opportunity, helping individuals grow and
-                              companies succeed. <br><br>Vision: A world where every job seeker finds their ideal role
-                              and
-                              every employer discovers their perfect match.</p>
+          <section class="border-y border-slate-200 bg-slate-50 py-14">
+               <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-2xl">
+                         <h2 class="text-3xl font-bold text-slate-950">Built for the real campus workflow</h2>
+                         <p class="mt-3 text-slate-600">Students can search, apply, and track applications. Recruiters
+                              can create companies, post jobs, and review applicants.</p>
                     </div>
-               </section>
-               <section class="card card2">
-                    <div class="content">
-                         <h1>Empowering Career Journeys</h1>
-                         <p>Mission: To simplify the path to success by connecting people with the right job
-                              opportunities and resources.<br><br>Vision: To be the trusted gateway for career growth
-                              and talent discovery, making job searches smarter and faster.</p>
+                    <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+                              <h3 class="font-semibold text-slate-950">Focused Listings</h3>
+                              <p class="mt-2 text-sm leading-6 text-slate-600">Browse roles by title, company, job type,
+                                   location, and experience level.</p>
+                         </article>
+                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+                              <h3 class="font-semibold text-slate-950">Simple Applications</h3>
+                              <p class="mt-2 text-sm leading-6 text-slate-600">Upload a resume, add a cover letter, and
+                                   avoid duplicate applications.</p>
+                         </article>
+                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+                              <h3 class="font-semibold text-slate-950">Recruiter Tools</h3>
+                              <p class="mt-2 text-sm leading-6 text-slate-600">Register companies, post openings, and
+                                   keep job records organized.</p>
+                         </article>
+                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+                              <h3 class="font-semibold text-slate-950">Status Tracking</h3>
+                              <p class="mt-2 text-sm leading-6 text-slate-600">Students see application status while
+                                   recruiters move candidates forward.</p>
+                         </article>
                     </div>
-               </section>
-               <section class="card card3">
-                    <div class="content">
-                         <h1> Shaping the Future of Work</h1>
-                         <p>Mission: To make job hunting easier, faster, and more accessible, empowering people to
-                              achieve their professional goals.<br><br>Vision: To revolutionize how people find work and
-                              how businesses hire, fostering a more dynamic and connected workforce.</p>
-                    </div>
-               </section>
-               <section class="card card4">
-                    <div class="content">
-                         <h1> Unlocking Potential, One Job at a Time</h1>
-                         <p>Mission: To provide job seekers with the tools and opportunities to unlock their full
-                              potential, while helping employers find the talent they need to succeed.<br><br>Vision: To
-                              be the go-to platform that connects individuals and organizations, driving career growth
-                              and shaping a brighter future for both.</p>
-                    </div>
-               </section>
-          </div>
+               </div>
+          </section>
      </main>
-
-
-     <!-- <div class="footer-container">
-               <div class="footer-about">
-                    <img class="footerLogo" src="./assets/images/myLogo.png" alt="Skratchr">
-                    <p>Your gateway to the best job opportunities. We connect employers and job seekers with ease and
-                         trust.</p>
-               </div>
-
-               <div class="footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                         <li><a href="/about">About Us</a></li>
-                         <li><a href="/jobs">Browse Jobs</a></li>
-                         <li><a href="/contact">Contact</a></li>
-                         <li><a href="/login">Login</a></li>
-                         <li><a href="/register">Register</a></li>
-                    </ul>
-               </div>
-
-               <div class="footer-contact">
-                    <h4>Contact</h4>
-                    <p>Email: ddd@gmail.com</p>
-                    <p>Phone: +1 234 567 8901</p>
-                    <p>Address: 123 indu park, Employment City, Nagasaki</p>
-               </div>
-
-               <div class="footer-social">
-                    <h4>Follow Us</h4>
-                    <div class="social-icons">
-                         <a href="#"><i class="fab fa-facebook-f"></i></a>
-                         <a href="#"><i class="fab fa-twitter"></i></a>
-                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                         <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-               </div>
-          </div> -->
-
-     
-
 </body>
 
 </html>

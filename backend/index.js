@@ -17,12 +17,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "http://localhost:8080",
+  "http://127.0.0.1:8080",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173"
+].filter(Boolean);
+
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,
-    "http://localhost:5500",
-    "http://127.0.0.1:5500"
-  ],
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error(`CORS blocked origin: ${origin}`));
+  },
   credentials: true
 }));
 
@@ -39,7 +48,7 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-app.listen(PORT, () => {
-  connectDB();
+app.listen(PORT, async () => {
+  await connectDB();
   console.log(`Server running at port ${PORT}`);
 });

@@ -1,16 +1,8 @@
 import { JOB_API_END_POINT, USER_API_END_POINT, displayMessage, handleLogout } from './utils.js';
 
 async function fetchJobDetails() {
-     console.log("--- fetchJobDetails started ---");
-     console.log("window.location.href:", window.location.href);
-
-     console.log("window.location.search:", window.location.search);
-
      const urlParams = new URLSearchParams(window.location.search);
      const jobId = urlParams.get('id');
-
-     console.log("URLSearchParams size:", urlParams.size);
-     console.log("Extracted Job ID:", jobId);
 
      const jobDetailsDiv = document.getElementById('job-details');
      const applyBtn = document.getElementById('apply-btn');
@@ -18,7 +10,6 @@ async function fetchJobDetails() {
      if (!jobId) {
           jobDetailsDiv.innerHTML = '<p class="error-message">Job ID not found in URL.</p>';
           applyBtn.classList.add('hidden');
-          console.error("DEBUG: Job ID was not found or was empty, stopping.");
           return;
      }
 
@@ -28,7 +19,6 @@ async function fetchJobDetails() {
      try {
           axios.defaults.withCredentials = true; // Essential for sending cookies with Axios
 
-          // Fetch job details
           const response = await axios.get(`${JOB_API_END_POINT}/${jobId}`);
           const job = response.data.job;
 
@@ -39,28 +29,27 @@ async function fetchJobDetails() {
           }
 
           jobDetailsDiv.innerHTML = `
-            <h2 class="text-2xl font-bold">${job.title}</h2>
-            <p class="text-lg"><strong>Company:</strong> ${job.company?.name || 'N/A'}</p>
-            <p><strong>Location:</strong> ${job.location}</p>
-            <p><strong>Job Type:</strong> ${job.jobType}</p>
-            <p><strong>Experience Level:</strong> ${job.experienceLevel}</p>
-            <p><strong>Salary:</strong> ${job.salary ? `$${job.salary.toLocaleString()}` : 'N/A'}</p>
-            <p><strong>Position:</strong> ${job.position}</p>
-            <h3>Description:</h3>
-            <p>${job.description}</p>
-            <h3>Requirements:</h3>
-            <ul>
+            <p class="text-sm font-semibold uppercase tracking-widest text-slate-500">${job.company?.name || 'N/A'}</p>
+            <h1 class="mt-2 text-3xl font-bold text-slate-950">${job.title}</h1>
+            <div class="mt-5 grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
+                <p><strong>Location:</strong> ${job.location}</p>
+                <p><strong>Job Type:</strong> ${job.jobType}</p>
+                <p><strong>Experience:</strong> ${job.experienceLevel}</p>
+                <p><strong>Salary:</strong> ${job.salary ? `Rs. ${job.salary.toLocaleString()}` : 'N/A'}</p>
+                <p><strong>Position:</strong> ${job.position}</p>
+            </div>
+            <h2 class="mt-8 text-lg font-semibold">Description</h2>
+            <p class="mt-2 leading-7 text-slate-600">${job.description}</p>
+            <h2 class="mt-8 text-lg font-semibold">Requirements</h2>
+            <ul class="mt-2 list-disc space-y-1 pl-5 text-slate-600">
                 ${job.requirements.map(req => `<li>${req}</li>`).join('')}
             </ul>
         `;
 
-          // Check if user is a student and show/hide apply button
           if (role === 'student' && token) {
                applyBtn.classList.remove('hidden');
 
-               // IMPORTANT CHANGE: Redirect to the new application page
                applyBtn.onclick = () => {
-                    // Pass the jobId to the new application page
                     window.location.href = `apply-job.html?id=${jobId}`;
                };
           } else {
@@ -82,5 +71,4 @@ async function fetchJobDetails() {
      }
 }
 
-// Call the function when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', fetchJobDetails);

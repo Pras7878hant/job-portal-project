@@ -25,20 +25,20 @@ const userSchema = new mongoose.Schema({
           type: String,
           default: ""
      },
-     profilePhoto: { // Added
+     profilePhoto: {
           type: String,
-          default: "" // You can set a default URL for a placeholder image here
+          default: "/assets/images/default-avatar.jpg"
      },
-     bio: { // Added
+     bio: {
           type: String,
           default: ""
      },
-     skills: { // Added
-          type: [String], // Array of strings for skills
+     skills: {
+          type: [String],
           default: []
      },
-     resume: { // Added
-          type: String, // Assuming this stores a URL or file path
+     resume: {
+          type: String,
           default: ""
      }
 }, { timestamps: true });

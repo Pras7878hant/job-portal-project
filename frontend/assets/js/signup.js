@@ -1,28 +1,39 @@
-document.getElementById('signup-form').addEventListener('submit', async (e) => {
-     e.preventDefault();
-     const form = e.target;
-     const formData = new FormData();
-     formData.append('fullName', form.fullName.value);
-     formData.append('email', form.email.value);
-     formData.append('phoneNumber', form.phoneNumber.value);
-     formData.append('password', form.password.value);
-     formData.append('role', form.role.value);
+import { USER_API_END_POINT, displayMessage } from './utils.js';
 
-     try {
-          const response = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-               withCredentials: true
-          });
-          if (response.data.success) {
-               alert('Sign up successful! Please log in.');
-               window.location.href = 'login.html';
-          } else {
-               alert(response.data.message);
+const form = document.getElementById('signup-form');
+
+if (form) {
+     form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          const requestBody = {
+               fullName: form.fullName.value.trim(),
+               email: form.email.value.trim(),
+               phone: form.phoneNumber.value.trim(),
+               password: form.password.value,
+               role: form.role.value
+          };
+
+          if (!requestBody.fullName || !requestBody.email || !requestBody.phone || !requestBody.password || !requestBody.role) {
+               displayMessage('Please fill in all fields.', 'error');
+               return;
           }
-     } catch (error) {
-          console.error('Sign up error:', error); // Line 21: This is where the error is logged
-          alert('Sign up failed. Please try again.');
-     }
-}); console.log('Sign up form submitted.');
-console.log('Form data:', formData);
-console.log('Response:', response);
-console.log('Error:', error);
+
+          try {
+               const response = await axios.post(`${USER_API_END_POINT}/register`, requestBody, {
+                    withCredentials: true
+               });
+
+               if (response.data.success) {
+                    displayMessage(response.data.message || 'Account created successfully. Please log in.', 'success');
+                    setTimeout(() => {
+                         window.location.href = 'login.html';
+                    }, 900);
+               } else {
+                    displayMessage(response.data.message || 'Sign up failed.', 'error');
+               }
+          } catch (error) {
+               displayMessage(error.response?.data?.message || 'Sign up failed. Please try again.', 'error');
+          }
+     });
+}

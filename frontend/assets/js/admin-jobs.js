@@ -1,22 +1,18 @@
 import { handleLogout, authFetch, COMPANY_API_END_POINT, JOB_API_END_POINT } from '/assets/js/utils.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-     console.log('admin-job.js: DOM Content Loaded, starting initialization.');
 
      const token = localStorage.getItem('token');
      const companySelect = document.getElementById('job-company');
      const postJobForm = document.getElementById('post-job-form');
 
      if (!token) {
-          console.warn('admin-job.js: Token not found, redirecting to login.');
           alert('Please log in to post a job.');
           window.location.href = '../login.html';
           return;
      }
-     console.log('admin-job.js: Token found:', token);
 
      async function populateCompaniesDropdown() {
-          console.log('admin-job.js: Attempting to populate companies dropdown...');
           try {
                const response = await authFetch(`${COMPANY_API_END_POINT}/get`, {
                     method: 'GET',
@@ -24,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                });
 
                if (response.data.success && response.data.companies.length > 0) {
-                    console.log('admin-job.js: Companies fetched successfully:', response.data.companies);
                     companySelect.innerHTML = '<option value="">Select a Company</option>';
                     response.data.companies.forEach(company => {
                          const option = document.createElement('option');
@@ -33,7 +28,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                          companySelect.appendChild(option);
                     });
                } else {
-                    console.warn('admin-job.js: No companies found or API call failed:', response.data);
                     companySelect.innerHTML = '<option value="">No companies found. Please register one first.</option>';
                     alert('You need to register a company first to post jobs.');
                }
@@ -50,11 +44,9 @@ document.addEventListener('DOMContentLoaded', async () => {
      }
 
      await populateCompaniesDropdown();
-     console.log('admin-job.js: populateCompaniesDropdown finished.');
 
      postJobForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          console.log('admin-job.js: Form submit button clicked.');
 
           const formData = {
                title: document.getElementById('job-title').value,
@@ -68,51 +60,40 @@ document.addEventListener('DOMContentLoaded', async () => {
                salary: Number(document.getElementById('job-salary').value),
           };
 
-          console.log('admin-job.js: Sending formData:', formData);
 
-          // Validate form data
           if (!formData.title) {
-               console.warn('admin-job.js: Validation failed: title is empty.');
                alert('Please fill in the job title field.');
                return;
           }
           if (!formData.description) {
-               console.warn('admin-job.js: Validation failed: description is empty.');
                alert('Please fill in the description field.');
                return;
           }
           if (!Array.isArray(formData.requirements) || formData.requirements.length === 0) {
-               console.warn('admin-job.js: Validation failed: requirements is empty or not an array.');
                alert('Please provide at least one requirement (comma-separated).');
                return;
           }
           if (!formData.jobType || !['Full-Time', 'Part-Time', 'Contract', 'Temporary', 'Internship'].includes(formData.jobType)) {
-               console.warn('admin-job.js: Validation failed: jobType is invalid.');
                alert('Please select a valid job type.');
                return;
           }
           if (!formData.experienceLevel || !['Entry-Level', 'Mid-Level', 'Senior-Level', 'Director', 'Executive'].includes(formData.experienceLevel)) {
-               console.warn('admin-job.js: Validation failed: experienceLevel is invalid.');
                alert('Please select a valid experience level.');
                return;
           }
           if (!formData.position) {
-               console.warn('admin-job.js: Validation failed: position is empty.');
                alert('Please fill in the position field.');
                return;
           }
           if (!formData.companyId || !/^[0-9a-fA-F]{24}$/.test(formData.companyId)) {
-               console.warn('admin-job.js: Validation failed: companyId is invalid.');
                alert('Please select a valid company.');
                return;
           }
           if (!formData.location) {
-               console.warn('admin-job.js: Validation failed: location is empty.');
                alert('Please fill in the location field.');
                return;
           }
           if (isNaN(formData.salary) || formData.salary <= 0) {
-               console.warn('admin-job.js: Validation failed: salary is invalid or not positive.');
                alert('Please enter a valid positive number for salary.');
                return;
           }
@@ -125,7 +106,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                });
 
                if (response.data.success) {
-                    console.log('admin-job.js: Job posted successfully:', response.data);
                     alert(response.data.message);
                     postJobForm.reset();
                     window.location.href = './companies.html';

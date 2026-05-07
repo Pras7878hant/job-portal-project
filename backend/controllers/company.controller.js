@@ -1,33 +1,18 @@
-// backend/controllers/company.controller.js
 
 import { Company } from "../models/company.model.js"; // Assuming your model is company.model.js
-// Removed imports for datauri and cloudinary as logo functionality is being removed
-// import getDataUri from "../utils/datauri.js";
-// import cloudinary from "../utils/cloudinary.js";
 
-// @desc    Register a new company
-// @route   POST /api/v1/company/register
-// @access  Private (Recruiter) - Assuming route is protected and req.id is set by middleware
 export const registerCompany = async (req, res) => {
      try {
-          // Debugging logs - keep them if you need, remove otherwise
-          console.log('req.body:', req.body);
-          // console.log('req.file:', req.file); // Removed as logo is gone
 
-          // Destructure 'location' along with other fields
           const { name, description, website, location } = req.body;
-          // const file = req.file; // Removed as logo is gone
 
-          // --- Server-side Validation ---
           if (!name || !description) { // 'name' and 'description' are essential for company
-               console.log('Company name or description is missing:', req.body);
                return res.status(400).json({
                     message: "Company name and description are required.",
                     success: false
                });
           }
 
-          // Ensure user ID is available from middleware (req.id should be the recruiter's ID)
           if (!req.id) {
                console.error('Error: User ID (req.id) is missing in registerCompany controller.');
                return res.status(401).json({
@@ -36,7 +21,6 @@ export const registerCompany = async (req, res) => {
                });
           }
 
-          // Check if a company with this name already exists for the logged-in user (recruiter)
           let company = await Company.findOne({ name: name, userId: req.id });
           if (company) {
                return res.status(409).json({
@@ -45,7 +29,6 @@ export const registerCompany = async (req, res) => {
                });
           }
 
-          // Prepare company data for creation
           const companyData = {
                name: name,
                description: description,
@@ -54,21 +37,7 @@ export const registerCompany = async (req, res) => {
                userId: req.id
           };
 
-          // Removed logo upload logic
-          // if (file) {
-          //     try {
-          //         const fileUri = getDataUri(file);
-          //         const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-          //             resource_type: 'auto'
-          //         });
-          //         companyData.logo = cloudResponse.secure_url;
-          //     } catch (uploadError) {
-          //         console.error('Cloudinary upload error:', uploadError);
-          //         return res.status(500).json({ success: false, message: "Failed to upload company logo." });
-          //     }
-          // }
 
-          // Create the company in the database
           company = await Company.create(companyData);
 
           return res.status(201).json({
@@ -96,9 +65,6 @@ export const registerCompany = async (req, res) => {
      }
 };
 
-// @desc    Get companies associated with the logged-in user (recruiter)
-// @route   GET /api/v1/company/get
-// @access  Private (Recruiter) - Assuming route is protected and req.id is set
 export const getCompany = async (req, res) => {
      try {
           const userId = req.id;
@@ -129,9 +95,6 @@ export const getCompany = async (req, res) => {
      }
 };
 
-// @desc    Get company by ID
-// @route   GET /api/v1/company/:id
-// @access  Public (or Private depending on your design)
 export const getCompanyById = async (req, res) => {
      try {
           const companyId = req.params.id;
@@ -158,44 +121,22 @@ export const getCompanyById = async (req, res) => {
      }
 };
 
-// @desc    Update company details
-// @route   PUT /api/v1/company/:id
-// @access  Private (Recruiter - should also check ownership)
 export const updateCompany = async (req, res) => {
      try {
-          console.log('req.body:', req.body); // Debug log
 
-          // Destructure 'location' from req.body
           const { name, description, website, location } = req.body;
-          // const file = req.file; // Removed as logo is gone
 
           const updateData = {};
-          // Only update fields that are provided
           if (name) updateData.name = name;
           if (description) updateData.description = description;
           if (website) updateData.website = website;
           if (location) updateData.location = location; // Added location to updateData
 
-          // Ensure user ID is available (ownership check)
           if (!req.id) {
                return res.status(401).json({ message: "Not authorized: User ID is missing.", success: false });
           }
 
-          // Removed logo upload for update
-          // if (file) {
-          //     try {
-          //         const fileUri = getDataUri(file);
-          //         const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-          //             resource_type: 'auto'
-          //         });
-          //         updateData.logo = cloudResponse.secure_url;
-          //     } catch (uploadError) {
-          //         console.error('Cloudinary update upload error:', uploadError);
-          //         return res.status(500).json({ success: false, message: "Failed to upload new company logo." });
-          //     }
-          // }
 
-          // Find company by ID AND ensure the logged-in user owns it
           const company = await Company.findOneAndUpdate(
                { _id: req.params.id, userId: req.id },
                updateData,
@@ -229,9 +170,6 @@ export const updateCompany = async (req, res) => {
      }
 };
 
-// @desc    Delete a company
-// @route   DELETE /api/v1/company/:id
-// @access  Private (Recruiter - should check ownership)
 export const deleteCompany = async (req, res) => {
      try {
           const companyId = req.params.id;
@@ -258,7 +196,6 @@ export const deleteCompany = async (req, res) => {
      }
 };
 
-// Export all controller functions
 export const companyController = {
      registerCompany,
      getCompany,
