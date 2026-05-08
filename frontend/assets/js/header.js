@@ -1,10 +1,20 @@
 export function loadHeader() {
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  let user = null;
+  try {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser && storedUser !== "null" && storedUser !== "undefined") {
+      user = JSON.parse(storedUser);
+      if (Object.keys(user).length === 0) user = null;
+    }
+  } catch (e) {
+    user = null;
+  }
+
   const currentPath = window.location.pathname;
   const role = localStorage.getItem("userRole") || user?.role;
-
   const isAdminPage = currentPath.includes("/admin/");
   const basePath = isAdminPage ? ".." : ".";
+  const isLoggedIn = user && user._id;
 
   const headerTemplate = `
     <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -19,21 +29,18 @@ export function loadHeader() {
         </button>
 
         <div class="hidden items-center gap-2 md:flex" id="navMenu">
-
           <a href="${basePath}/index.html" class="${navClass(currentPath, "index.html")}">
             Home
           </a>
 
-          ${user && role === "recruiter"
+          ${isLoggedIn && role === "recruiter"
       ? `
                 <a href="${basePath}/admin/companies.html" class="${navClass(currentPath, "companies.html")}">
                   Companies
                 </a>
-
                 <a href="${basePath}/admin/post-job.html" class="${navClass(currentPath, "post-job.html")}">
                   Post Job
                 </a>
-
                 <a href="${basePath}/admin/jobs.html" class="${navClass(currentPath, "jobs.html")}">
                   Jobs
                 </a>
@@ -42,8 +49,7 @@ export function loadHeader() {
                 <a href="${basePath}/browse.html" class="${navClass(currentPath, "browse.html")}">
                   Browse Jobs
                 </a>
-
-                ${user
+                ${isLoggedIn
         ? `
                       <a href="${basePath}/applications.html" class="${navClass(currentPath, "applications.html")}">
                         My Applications
@@ -56,28 +62,23 @@ export function loadHeader() {
         </div>
 
         <div class="flex items-center gap-3">
-          ${user
+          ${isLoggedIn
       ? `
                 <div class="relative">
-
-                  <button id="user-menu" class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100">
-                    <img 
-                      src="${user.profilePhoto || `${basePath}/assets/images/default-avatar.jpg`}" 
-                      alt="User" 
-                      class="h-full w-full object-cover"
-                    >
+                  <button id="user-menu" class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
+                    ${user.profilePhoto && user.profilePhoto.trim() !== "" && !user.profilePhoto.includes("default-avatar")
+        ? `<img src="${user.profilePhoto}" alt="User" class="h-full w-full object-cover">`
+        : `<i class="fas fa-user text-lg"></i>`
+      }
                   </button>
 
                   <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-44 overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg">
-
                     <a href="${basePath}/profile.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                       Profile
                     </a>
-
                     <button id="logout-btn" class="block w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50">
                       Logout
                     </button>
-
                   </div>
                 </div>
               `
@@ -132,6 +133,12 @@ export function loadHeader() {
       userDropdown.classList.toggle("hidden");
     });
   }
+
+  document.addEventListener("click", (event) => {
+    if (userMenu && !userMenu.contains(event.target) && !userDropdown.contains(event.target)) {
+      userDropdown.classList.add("hidden");
+    }
+  });
 
   const logoutBtn = document.getElementById("logout-btn");
 

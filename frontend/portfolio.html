@@ -8,6 +8,7 @@
      <script src="https://cdn.tailwindcss.com"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="assets/js/main.js"></script>
 </head>
 
 <body id="theme-body" class="min-h-screen bg-slate-50 text-slate-950 transition-colors duration-300">
@@ -15,7 +16,7 @@
      <nav class="border-b border-opacity-20 py-4" id="portfolio-nav">
           <div class="mx-auto max-w-4xl px-4 flex justify-between items-center">
                <span class="text-xl font-bold tracking-tight">Skratchr Portfolios</span>
-               <a href="/" class="text-sm font-semibold hover:underline">Build Your Own</a>
+               <a href="index.html" class="text-sm font-semibold hover:underline">Build Your Own</a>
           </div>
      </nav>
 
@@ -31,7 +32,7 @@
                </div>
                <h1 class="text-2xl font-bold">Portfolio Unavailable</h1>
                <p id="error-message" class="mt-2 text-slate-600">This portfolio doesn't exist or is set to private.</p>
-               <a href="/"
+               <a href="index.html"
                     class="mt-6 inline-block rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">Return
                     to Skratchr</a>
           </div>
@@ -63,7 +64,7 @@
                          <section>
                               <h2 class="text-xl font-bold mb-4 uppercase tracking-wider text-sm opacity-60">Technical
                                    Skills</h2>
-                              <div id="port-skills" class="flex flex-wrap gap-2">
+                              <div id="port-skills" class="flex flex-wrap text-white gap-2">
                               </div>
                          </section>
                     </div>
@@ -71,7 +72,7 @@
           </div>
      </main>
 
-     <script type="module" src="/assets/js/portfolio.js"></script>
+     <script type="module" src="assets/js/portfolio.js"></script>
 </body>
 
 </html>
