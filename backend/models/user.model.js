@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema({
           type: String,
           default: ""
      },
+     videoPitch: {
+          type: String,
+          default: ""
+     },
      isPortfolioPublic: {
           type: Boolean,
           default: false

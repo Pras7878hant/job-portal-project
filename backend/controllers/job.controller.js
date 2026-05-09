@@ -1,4 +1,3 @@
-
 import { Job } from "../models/job.model.js";
 import { User } from "../models/user.model.js";
 import { Company } from '../models/company.model.js';
@@ -113,7 +112,8 @@ export const getRecruiterJobs = async (req, res) => {
                     path: 'applications',
                     populate: {
                          path: 'applicant',
-                         select: 'fullName email resume phone skills'
+                         // I added profilePhoto and videoPitch to the select array so the frontend can access them
+                         select: 'fullName email resume phone skills profilePhoto videoPitch'
                     }
                })
                .sort({ createdAt: -1 })

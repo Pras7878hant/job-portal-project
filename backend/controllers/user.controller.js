@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import getDataUri from "../utils/datauri.js";
+import { getDataUri } from "../middlewares/multer.js";
 import cloudinary from "../utils/cloudinary.js";
 import { Job } from '../models/job.model.js';
 
@@ -39,7 +39,6 @@ export const register = async (req, res) => {
 
           const hashedPassword = await bcrypt.hash(password, 10);
 
-          // Generate unique username based on full name
           const baseUsername = fullName.toLowerCase().replace(/[^a-z0-9]/g, '');
           const randomNum = Math.floor(1000 + Math.random() * 9000);
           const username = `${baseUsername}${randomNum}`;
@@ -122,6 +121,7 @@ export const login = async (req, res) => {
                bio: user.bio,
                skills: user.skills,
                resume: user.resume,
+               videoPitch: user.videoPitch,
                isPortfolioPublic: user.isPortfolioPublic,
                portfolioTheme: user.portfolioTheme
           };
@@ -153,7 +153,6 @@ export const logout = async (req, res) => {
      }
 };
 
-
 export const getProfile = async (req, res) => {
      try {
           const userId = req.id;
@@ -178,6 +177,7 @@ export const getProfile = async (req, res) => {
                bio: user.bio || '',
                skills: user.skills || [],
                resume: user.resume || '',
+               videoPitch: user.videoPitch || '',
                isPortfolioPublic: user.isPortfolioPublic || false,
                portfolioTheme: user.portfolioTheme || 'light'
           };
@@ -290,6 +290,25 @@ export const updateProfile = async (req, res) => {
                user.resume = cloudResponse.secure_url;
           }
 
+          if (user.role === 'student' && req.files && req.files['videoPitch'] && req.files['videoPitch'][0]) {
+               const videoPitchFile = req.files['videoPitch'][0];
+
+               if (user.videoPitch && user.videoPitch.includes('res.cloudinary.com')) {
+                    const publicIdMatch = user.videoPitch.match(/\/video_pitches\/([^/.]+)\./);
+                    if (publicIdMatch && publicIdMatch[1]) {
+                         const publicId = `video_pitches/${publicIdMatch[1]}`;
+                         await cloudinary.uploader.destroy(publicId, { resource_type: 'video' }).catch(() => { });
+                    }
+               }
+
+               const fileUri = getDataUri(videoPitchFile);
+               const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+                    folder: 'video_pitches',
+                    resource_type: 'video'
+               });
+               user.videoPitch = cloudResponse.secure_url;
+          }
+
           await user.save();
 
           const updatedUser = {
@@ -303,6 +322,7 @@ export const updateProfile = async (req, res) => {
                bio: user.bio,
                skills: user.skills,
                resume: user.resume,
+               videoPitch: user.videoPitch,
                isPortfolioPublic: user.isPortfolioPublic,
                portfolioTheme: user.portfolioTheme,
                createdAt: user.createdAt,
@@ -358,7 +378,7 @@ export const getAllApplicants = async (req, res) => {
           const applicants = await User.find({
                'appliedJobs.job': { $in: postedJobIds }
           })
-               .select('fullName email phone resume appliedJobs profilePhoto')
+               .select('fullName email phone resume videoPitch appliedJobs profilePhoto')
                .populate({
                     path: 'appliedJobs.job',
                     match: { _id: { $in: postedJobIds } },
@@ -382,7 +402,8 @@ export const getAllApplicants = async (req, res) => {
                                    email: applicant.email,
                                    phone: applicant.phone,
                                    resume: applicant.resume,
-                                   profilePhoto: applicant.profilePhoto // Included for blind screening toggle
+                                   videoPitch: applicant.videoPitch,
+                                   profilePhoto: applicant.profilePhoto
                               },
                               appliedDate: app.appliedDate,
                               status: app.status

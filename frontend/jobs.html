@@ -12,7 +12,7 @@
 </head>
 
 <body class="min-h-screen bg-slate-50 text-slate-950">
-     <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+     <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 relative z-10">
           <div class="flex flex-col gap-4 border-b border-slate-200 pb-6 md:flex-row md:items-end md:justify-between">
                <div>
                     <h1 class="text-3xl font-bold">Manage Jobs</h1>
@@ -44,6 +44,17 @@
           <p id="no-jobs-message" class="mt-8 hidden text-slate-600">No jobs posted yet.</p>
      </main>
 
+     <div id="video-modal"
+          class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex-col items-center justify-center p-4">
+          <button onclick="closeVideoModal()"
+               class="absolute top-6 right-6 text-white hover:text-red-500 transition-colors">
+               <i class="fas fa-times text-4xl"></i>
+          </button>
+          <div class="w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+               <video id="modal-video-player" controls class="w-full h-auto max-h-[80vh] outline-none"></video>
+          </div>
+     </div>
+
      <script type="module">
           import { JOB_API_END_POINT, APPLICATION_API_END_POINT, handleLogout, displayMessage } from './assets/js/utils.js';
 
@@ -52,13 +63,32 @@
           const userRole = localStorage.getItem('userRole') || localStorage.getItem('role');
           const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
 
-          // State for Bias-Free Mode and Job Data
           let isBlindMode = true;
           let currentJobsData = [];
 
           document.getElementById('logoutButton').addEventListener('click', handleLogout);
           window.deleteJob = deleteJob;
           window.updateApplicationStatus = updateApplicationStatus;
+
+          window.openVideoModal = (url) => {
+               const modal = document.getElementById('video-modal');
+               const player = document.getElementById('modal-video-player');
+               player.src = url;
+               modal.classList.remove('hidden');
+               modal.classList.add('flex');
+               player.play();
+               document.body.style.overflow = 'hidden';
+          };
+
+          window.closeVideoModal = () => {
+               const modal = document.getElementById('video-modal');
+               const player = document.getElementById('modal-video-player');
+               player.pause();
+               player.src = '';
+               modal.classList.add('hidden');
+               modal.classList.remove('flex');
+               document.body.style.overflow = 'auto';
+          };
 
           const blindToggle = document.getElementById('blind-screening-toggle');
           blindToggle.addEventListener('change', (e) => {
@@ -103,25 +133,33 @@
                          ? applications.map(application => {
                               const applicant = application.applicant || {};
 
-                              // Bias-Free Logic
                               const displayName = isBlindMode ? `Applicant #${application._id.toString().slice(-4)}` : (applicant.fullName || 'Student Name N/A');
                               const displayEmail = isBlindMode ? 'Hidden in Bias-Free Mode' : (applicant.email || 'N/A');
 
+                              const videoPitchHtml = applicant.videoPitch
+                                   ? `<button onclick="openVideoModal('${applicant.videoPitch}')" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-700 shadow-sm transition-colors"><i class="fas fa-play mr-2"></i>Watch Pitch</button>`
+                                   : `<span class="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-400"><i class="fas fa-video-slash mr-2"></i>No Video</span>`;
+
                               return `
                                    <li class="rounded-md border border-slate-200 bg-slate-50 p-4">
-                                        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                              <div>
                                                   <p class="font-semibold ${isBlindMode ? 'text-slate-600 italic' : ''}">${displayName}</p>
                                                   <p class="text-sm text-slate-600">${displayEmail}</p>
                                              </div>
-                                             <select class="rounded-md border border-slate-300 px-3 py-2 text-sm" onchange="updateApplicationStatus('${application._id}', this.value)">
-                                                  <option value="pending" ${application.status === 'pending' ? 'selected' : ''}>Pending</option>
-                                                  <option value="reviewed" ${application.status === 'reviewed' ? 'selected' : ''}>Reviewed</option>
-                                                  <option value="interview" ${application.status === 'interview' ? 'selected' : ''}>Interview</option>
-                                                  <option value="accepted" ${application.status === 'accepted' ? 'selected' : ''}>Accepted</option>
-                                                  <option value="rejected" ${application.status === 'rejected' ? 'selected' : ''}>Rejected</option>
-                                             </select>
-                                             <a href="application-details.html?id=${application._id}" class="rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">View Details</a>
+                                             <div class="flex flex-wrap items-center gap-2">
+                                                  <select class="rounded-md border border-slate-300 px-3 py-2 text-sm cursor-pointer" onchange="updateApplicationStatus('${application._id}', this.value)">
+                                                       <option value="pending" ${application.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                                       <option value="reviewed" ${application.status === 'reviewed' ? 'selected' : ''}>Reviewed</option>
+                                                       <option value="interview" ${application.status === 'interview' ? 'selected' : ''}>Interview</option>
+                                                       <option value="accepted" ${application.status === 'accepted' ? 'selected' : ''}>Accepted</option>
+                                                       <option value="rejected" ${application.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+                                                  </select>
+                                                  
+                                                  ${videoPitchHtml}
+
+                                                  <a href="application-details.html?id=${application._id}" class="rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">View Details</a>
+                                             </div>
                                         </div>
                                    </li>
                               `;
@@ -135,7 +173,10 @@
                                    <h2 class="mt-1 text-xl font-bold">${job.title}</h2>
                                    <p class="mt-2 text-sm text-slate-600">${job.location} · ${job.jobType}</p>
                               </div>
-                              <button class="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-50" onclick="deleteJob('${job._id}')">Delete</button>
+                              <div class="flex items-center gap-2">
+                                   <a href="review.html?jobId=${job._id}" class="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"><i class="fas fa-bolt mr-2"></i>Review in Zen Mode</a>
+                                   <button class="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-50" onclick="deleteJob('${job._id}')">Delete</button>
+                              </div>
                          </div>
                          <h3 class="mt-6 font-semibold">Applications</h3>
                          <ul class="mt-3 grid gap-3">${applicationsHtml}</ul>
