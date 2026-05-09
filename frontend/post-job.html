@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,86 +8,104 @@
      <script src="https://cdn.tailwindcss.com"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-     <script type="module" src="assets/js/main.js"></script>
-</head>
-<body class="min-h-screen bg-slate-50 text-slate-950">
-     <main class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
-          <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-               <div>
-                    <p id="welcome-message" class="text-sm font-semibold uppercase tracking-widest text-slate-500"></p>
-                    <h1 class="mt-2 text-3xl font-bold">Post New Job</h1>
-               </div>
-               <button class="logout-btn rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-white">Logout</button>
-          </div>
+     <script type="module" src="./assets/js/main.js"></script>
 
-          <section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-               <form id="post-job-form" class="grid gap-4">
-                    <div>
-                         <label for="title" class="block text-sm font-medium text-slate-700">Job Title</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text" id="title" name="title" required>
-                    </div>
-                    <div>
-                         <label for="description" class="block text-sm font-medium text-slate-700">Description</label>
-                         <textarea class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="description" name="description" rows="5" required></textarea>
-                    </div>
-                    <div>
-                         <label for="requirements" class="block text-sm font-medium text-slate-700">Requirements</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text" id="requirements" name="requirements" placeholder="JavaScript, React, Node.js" required>
-                    </div>
-                    <div class="grid gap-4 md:grid-cols-2">
-                         <div>
-                              <label for="salary" class="block text-sm font-medium text-slate-700">Salary</label>
-                              <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="number" id="salary" name="salary" min="0" required>
-                         </div>
-                         <div>
-                              <label for="location" class="block text-sm font-medium text-slate-700">Location</label>
-                              <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text" id="location" name="location" required>
-                         </div>
-                    </div>
-                    <div class="grid gap-4 md:grid-cols-2">
-                         <div>
-                              <label for="jobType" class="block text-sm font-medium text-slate-700">Job Type</label>
-                              <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="jobType" name="jobType" required>
-                                   <option value="">Select Job Type</option>
-                                   <option value="Full-Time">Full-Time</option>
-                                   <option value="Part-Time">Part-Time</option>
-                                   <option value="Contract">Contract</option>
-                                   <option value="Temporary">Temporary</option>
-                                   <option value="Internship">Internship</option>
-                              </select>
-                         </div>
-                         <div>
-                              <label for="experienceLevel" class="block text-sm font-medium text-slate-700">Experience Level</label>
-                              <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="experienceLevel" name="experienceLevel" required>
-                                   <option value="">Select Experience Level</option>
-                                   <option value="Entry-Level">Entry-Level</option>
-                                   <option value="Mid-Level">Mid-Level</option>
-                                   <option value="Senior-Level">Senior-Level</option>
-                                   <option value="Director">Director</option>
-                                   <option value="Executive">Executive</option>
-                              </select>
-                         </div>
-                    </div>
-                    <div class="grid gap-4 md:grid-cols-2">
-                         <div>
-                              <label for="position" class="block text-sm font-medium text-slate-700">Position</label>
-                              <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text" id="position" name="position" required>
-                         </div>
-                         <div>
-                              <label for="company" class="block text-sm font-medium text-slate-700">Company</label>
-                              <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="company" name="companyId" required>
-                                   <option value="">Loading companies...</option>
-                              </select>
-                         </div>
-                    </div>
-                    <button type="submit" class="btn-submit rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">Post Job</button>
-                    <div id="message" style="display: none"></div>
-               </form>
-               <div id="company-redirect-message" class="mt-4 hidden rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-                    You have not registered any companies yet. Please <a href="admin/company-setup.html" class="font-semibold underline">register a company</a> first.
+</head>
+
+
+<main class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+     <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+               <p id="welcome-message" class="text-sm font-semibold uppercase tracking-widest text-slate-500"></p>
+               <h1 class="mt-2 text-3xl font-bold">Post New Job</h1>
+          </div>
+          <button
+               class="logout-btn rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-white">Logout</button>
+     </div>
+
+     <section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+          <form id="post-job-form" class="grid gap-4">
+               <div>
+                    <label for="title" class="block text-sm font-medium text-slate-700">Job Title</label>
+                    <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text"
+                         id="title" name="title" required>
                </div>
-          </section>
-     </main>
-     <script type="module" src="./assets/js/post-job.js"></script>
+               <div>
+                    <label for="description" class="block text-sm font-medium text-slate-700">Description</label>
+                    <textarea class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="description"
+                         name="description" rows="5" required></textarea>
+               </div>
+               <div>
+                    <label for="requirements" class="block text-sm font-medium text-slate-700">Requirements</label>
+                    <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text"
+                         id="requirements" name="requirements" placeholder="JavaScript, React, Node.js" required>
+               </div>
+               <div class="grid gap-4 md:grid-cols-2">
+                    <div>
+                         <label for="salary" class="block text-sm font-medium text-slate-700">Salary</label>
+                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="number"
+                              id="salary" name="salary" min="0" required>
+                    </div>
+                    <div>
+                         <label for="location" class="block text-sm font-medium text-slate-700">Location</label>
+                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text"
+                              id="location" name="location" required>
+                    </div>
+               </div>
+               <div class="grid gap-4 md:grid-cols-2">
+                    <div>
+                         <label for="jobType" class="block text-sm font-medium text-slate-700">Job Type</label>
+                         <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="jobType"
+                              name="jobType" required>
+                              <option value="">Select Job Type</option>
+                              <option value="Full-Time">Full-Time</option>
+                              <option value="Part-Time">Part-Time</option>
+                              <option value="Contract">Contract</option>
+                              <option value="Temporary">Temporary</option>
+                              <option value="Internship">Internship</option>
+                         </select>
+                    </div>
+                    <div>
+                         <label for="experienceLevel" class="block text-sm font-medium text-slate-700">Experience
+                              Level</label>
+                         <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
+                              id="experienceLevel" name="experienceLevel" required>
+                              <option value="">Select Experience Level</option>
+                              <option value="Entry-Level">Entry-Level</option>
+                              <option value="Mid-Level">Mid-Level</option>
+                              <option value="Senior-Level">Senior-Level</option>
+                              <option value="Director">Director</option>
+                              <option value="Executive">Executive</option>
+                         </select>
+                    </div>
+               </div>
+               <div class="grid gap-4 md:grid-cols-2">
+                    <div>
+                         <label for="position" class="block text-sm font-medium text-slate-700">Position</label>
+                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text"
+                              id="position" name="position" required>
+                    </div>
+                    <div>
+                         <label for="company" class="block text-sm font-medium text-slate-700">Company</label>
+                         <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="company"
+                              name="companyId" required>
+                              <option value="">Loading companies...</option>
+                         </select>
+                    </div>
+               </div>
+               <button type="submit"
+                    class="btn-submit rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">Post
+                    Job</button>
+               <div id="message" style="display: none"></div>
+          </form>
+          <div id="company-redirect-message"
+               class="mt-4 hidden rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+               You have not registered any companies yet. Please <a href="admin/company-setup.html"
+                    class="font-semibold underline">register a company</a> first.
+          </div>
+     </section>
+</main>
+<script type="module" src="./assets/js/post-job.js"></script>
 </body>
+
 </html>

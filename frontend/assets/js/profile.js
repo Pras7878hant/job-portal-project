@@ -120,6 +120,17 @@ async function fetchProfile() {
                }
           }
 
+          const videoPreview = document.getElementById('video-preview');
+          const deleteVideoBtn = document.getElementById('delete-video-btn');
+          const startRecordBtn = document.getElementById('start-record-btn');
+
+          if (user.videoPitch) {
+               videoPreview.src = user.videoPitch;
+               videoPreview.classList.remove('hidden');
+               deleteVideoBtn.classList.remove('hidden');
+               startRecordBtn.classList.add('hidden');
+          }
+
      } catch (error) {
           displayMessage(messageDiv, error.response?.data?.message || 'An error occurred while loading profile.', 'error');
           if (error.response?.status === 401 || error.response?.status === 403) {
@@ -163,6 +174,10 @@ profileForm?.addEventListener('submit', async (event) => {
      if (isPortfolioPublicInput) formData.append('isPortfolioPublic', isPortfolioPublicInput.checked);
      if (portfolioThemeInput) formData.append('portfolioTheme', portfolioThemeInput.value);
 
+     if (videoBlob) {
+          formData.append('videoPitch', videoBlob, 'pitch.webm');
+     }
+
      try {
           const response = await axios.put(`${USER_API_END_POINT}/profile`, formData);
           displayMessage(messageDiv, response.data.message || 'Profile updated successfully.', 'success');
@@ -173,4 +188,68 @@ profileForm?.addEventListener('submit', async (event) => {
      } catch (error) {
           displayMessage(messageDiv, error.response?.data?.message || 'An error occurred while updating profile.', 'error');
      }
+});
+
+const videoPreview = document.getElementById('video-preview');
+const startRecordBtn = document.getElementById('start-record-btn');
+const stopRecordBtn = document.getElementById('stop-record-btn');
+const deleteVideoBtn = document.getElementById('delete-video-btn');
+
+let mediaRecorder;
+let videoChunks = [];
+let videoBlob = null;
+let stream = null;
+
+startRecordBtn?.addEventListener('click', async () => {
+     try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+          videoPreview.srcObject = stream;
+          videoPreview.play();
+          videoPreview.classList.remove('hidden');
+          videoPreview.controls = false;
+
+          mediaRecorder = new MediaRecorder(stream);
+          videoChunks = [];
+
+          mediaRecorder.ondataavailable = (e) => {
+               if (e.data.size > 0) videoChunks.push(e.data);
+          };
+
+          mediaRecorder.onstop = () => {
+               videoBlob = new Blob(videoChunks, { type: 'video/webm' });
+               videoPreview.srcObject = null;
+               videoPreview.src = URL.createObjectURL(videoBlob);
+               videoPreview.controls = true;
+
+               stream.getTracks().forEach(track => track.stop());
+          };
+
+          mediaRecorder.start();
+          startRecordBtn.classList.add('hidden');
+          stopRecordBtn.classList.remove('hidden');
+
+          setTimeout(() => {
+               if (mediaRecorder.state === 'recording') stopRecordBtn.click();
+          }, 30000);
+
+     } catch (err) {
+          displayMessage(messageDiv, 'Camera and microphone access is required to record a pitch.', 'error');
+     }
+});
+
+stopRecordBtn?.addEventListener('click', () => {
+     if (mediaRecorder && mediaRecorder.state === 'recording') {
+          mediaRecorder.stop();
+          stopRecordBtn.classList.add('hidden');
+          deleteVideoBtn.classList.remove('hidden');
+          startRecordBtn.classList.add('hidden');
+     }
+});
+
+deleteVideoBtn?.addEventListener('click', () => {
+     videoBlob = null;
+     videoPreview.src = '';
+     videoPreview.classList.add('hidden');
+     deleteVideoBtn.classList.add('hidden');
+     startRecordBtn.classList.remove('hidden');
 });

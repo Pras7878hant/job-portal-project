@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,45 +8,61 @@
      <script src="https://cdn.tailwindcss.com"></script>
      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body class="min-h-screen bg-slate-50 text-slate-950">
      <main class="flex min-h-screen items-center justify-center px-4 py-10">
           <section class="w-full max-w-lg rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
                <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-slate-950">Back to home</a>
                <h1 class="mt-6 text-2xl font-bold">Create your account</h1>
-               <p class="mt-2 text-sm text-slate-600">Choose student if you want to apply, or recruiter if you want to post jobs.</p>
+               <p class="mt-2 text-sm text-slate-600">Choose student if you want to apply, or recruiter if you want to
+                    post jobs.</p>
 
                <form id="signup-form" class="mt-6 grid gap-4">
                     <div>
                          <label for="fullName" class="block text-sm font-medium text-slate-700">Full Name</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" type="text" id="fullName" name="fullName" required>
+                         <input
+                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                              type="text" id="fullName" name="fullName" required>
                     </div>
                     <div>
                          <label for="email" class="block text-sm font-medium text-slate-700">Email</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" type="email" id="email" name="email" required>
+                         <input
+                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                              type="email" id="email" name="email" required>
                     </div>
                     <div>
                          <label for="phoneNumber" class="block text-sm font-medium text-slate-700">Phone Number</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" type="tel" id="phoneNumber" name="phoneNumber" required>
+                         <input
+                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                              type="tel" id="phoneNumber" name="phoneNumber" required>
                     </div>
                     <div>
                          <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" type="password" id="password" name="password" required>
+                         <input
+                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                              type="password" id="password" name="password" required>
                     </div>
                     <div>
                          <label for="role" class="block text-sm font-medium text-slate-700">Role</label>
-                         <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" id="role" name="role" required>
+                         <select
+                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                              id="role" name="role" required>
                               <option value="student">Student</option>
                               <option value="recruiter">Recruiter</option>
                          </select>
                     </div>
-                    <button type="submit" class="rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">Sign Up</button>
+                    <button type="submit"
+                         class="rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">Sign
+                         Up</button>
                </form>
 
                <div id="message" class="mt-4" style="display: none;"></div>
-               <p class="mt-5 text-sm text-slate-600">Already have an account? <a class="font-semibold text-slate-950 hover:underline" href="login.html">Login</a></p>
+               <p class="mt-5 text-sm text-slate-600">Already have an account? <a
+                         class="font-semibold text-slate-950 hover:underline" href="login.html">Login</a></p>
           </section>
      </main>
 
      <script type="module" src="./assets/js/signup.js"></script>
 </body>
+
 </html>

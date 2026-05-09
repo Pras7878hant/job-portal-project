@@ -134,7 +134,31 @@
                               <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
                                    type="password" id="confirmPassword" name="confirmPassword">
                          </div>
-                         <div class="md:col-span-2 flex flex-wrap gap-3 mt-4">
+
+                         <div class="md:col-span-2 mt-8 border-t border-slate-200 pt-8">
+                              <h3 class="text-lg font-bold text-black mb-4">Video Pitch (30 Seconds)</h3>
+                              <div class="flex flex-col gap-4">
+                                   <video id="video-preview" controls
+                                        class="hidden w-full max-w-sm rounded-xl border-2 border-slate-200 shadow-sm"></video>
+
+                                   <div class="flex flex-wrap gap-3">
+                                        <button type="button" id="start-record-btn"
+                                             class="inline-flex items-center justify-center rounded-full bg-slate-950 px-6 py-2.5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg hover:bg-slate-800">
+                                             <i class="fas fa-video mr-2"></i> Record Pitch
+                                        </button>
+                                        <button type="button" id="stop-record-btn"
+                                             class="hidden inline-flex items-center justify-center rounded-full bg-red-600 px-6 py-2.5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                                             <i class="fas fa-stop mr-2"></i> Stop
+                                        </button>
+                                        <button type="button" id="delete-video-btn"
+                                             class="hidden inline-flex items-center justify-center rounded-full border-2 border-red-600 bg-white px-6 py-2 text-sm font-bold text-red-600 transition-all hover:-translate-y-0.5 hover:bg-red-50">
+                                             <i class="fas fa-trash-alt mr-2"></i> Delete
+                                        </button>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <div class="md:col-span-2 flex flex-wrap gap-3 mt-4 border-t border-slate-200 pt-6">
                               <button type="submit"
                                    class="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">Save
                                    Changes</button>

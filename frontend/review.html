@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Review Applicants - Skratchr</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script type="module" src="assets/js/main.js"></script>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-950 font-sans">
+
+     <main class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <div class="mb-8 flex justify-between items-center">
+               <h1 class="text-4xl font-black">Applicants</h1>
+               <button id="trigger-zen-btn"
+                    class="rounded-full bg-slate-950 px-8 py-3 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl hover:bg-slate-800">
+                    <i class="fas fa-bolt mr-2"></i> Enter Zen Mode
+               </button>
+          </div>
+          <div id="standard-applicant-list" class="grid gap-4"></div>
+     </main>
+
+     <div id="zen-mode-overlay"
+          class="hidden fixed inset-0 z-50 bg-black text-white flex flex-col items-center justify-center p-8 backdrop-blur-xl">
+          <div id="zen-content" class="w-full max-w-3xl text-center transition-opacity duration-300">
+
+               <p id="zen-counter" class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-8"></p>
+
+               <video id="zen-video" controls
+                    class="hidden w-full max-w-lg mx-auto rounded-2xl shadow-2xl shadow-white/10 mb-8 border border-white/20 bg-gray-900"></video>
+
+               <h2 id="zen-name" class="text-5xl font-black mb-4 tracking-tight"></h2>
+               <p id="zen-skills" class="text-lg font-medium text-gray-400 mb-8"></p>
+
+               <a id="zen-resume" href="#" target="_blank"
+                    class="inline-flex items-center justify-center rounded-full border-2 border-white/20 bg-white/5 px-8 py-3 text-sm font-bold text-white transition-all hover:bg-white hover:text-black">
+                    <i class="fas fa-file-pdf mr-2"></i> Open Resume
+               </a>
+
+               <div
+                    class="fixed bottom-12 left-0 right-0 flex justify-center gap-16 text-sm font-bold tracking-widest text-gray-400 uppercase">
+                    <div class="flex flex-col items-center gap-3 transition-colors hover:text-red-500">
+                         <kbd
+                              class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-xl text-white border border-white/20 shadow-lg">←</kbd>
+                         <span>Reject</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-3 transition-colors hover:text-white">
+                         <kbd
+                              class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-xl text-white border border-white/20 shadow-lg">Esc</kbd>
+                         <span>Exit</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-3 transition-colors hover:text-green-500">
+                         <kbd
+                              class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-xl text-white border border-white/20 shadow-lg">→</kbd>
+                         <span>Interview</span>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <script type="module" src="assets/js/review.js"></script>
+</body>
+
+</html>

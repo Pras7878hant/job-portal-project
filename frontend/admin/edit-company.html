@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Edit Company - Skratchr</title>
      <script src="https://cdn.tailwindcss.com"></script>
      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
+
 <body class="min-h-screen bg-slate-50 text-slate-950">
      <main class="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:px-8">
           <section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
@@ -15,27 +18,37 @@
                <form id="editCompanyForm" class="mt-6 grid gap-4">
                     <div>
                          <label for="companyName" class="block text-sm font-medium text-slate-700">Company Name</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text" id="companyName" name="name" required>
+                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text"
+                              id="companyName" name="name" required>
                     </div>
                     <div>
-                         <label for="companyDescription" class="block text-sm font-medium text-slate-700">Description</label>
-                         <textarea class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" id="companyDescription" name="description" rows="5" required></textarea>
+                         <label for="companyDescription"
+                              class="block text-sm font-medium text-slate-700">Description</label>
+                         <textarea class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
+                              id="companyDescription" name="description" rows="5" required></textarea>
                     </div>
                     <div>
                          <label for="companyWebsite" class="block text-sm font-medium text-slate-700">Website</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text" id="companyWebsite" name="website">
+                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text"
+                              id="companyWebsite" name="website">
                     </div>
                     <div>
                          <label for="companyLocation" class="block text-sm font-medium text-slate-700">Location</label>
-                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text" id="companyLocation" name="location">
+                         <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" type="text"
+                              id="companyLocation" name="location">
                     </div>
                     <div class="flex flex-wrap gap-3">
-                         <button type="submit" class="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">Update Company</button>
-                         <a href="companies.html" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50">Back to Companies</a>
+                         <button type="submit"
+                              class="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">Update
+                              Company</button>
+                         <a href="companies.html"
+                              class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50">Back
+                              to Companies</a>
                     </div>
                </form>
           </section>
      </main>
      <script type="module" src="../assets/js/edit-company.js"></script>
 </body>
+
 </html>

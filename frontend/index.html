@@ -11,62 +11,129 @@
      <script type="module" src="assets/js/main.js"></script>
 </head>
 
-<body class="min-h-screen bg-slate-50 text-slate-950">
-     <main>
-          <section class="relative overflow-hidden bg-white">
+<body class="min-h-screen bg-gray-50 text-black font-sans selection:bg-black selection:text-white">
+
+     <div
+          class="fixed inset-0 z-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-70">
+     </div>
+     <div class="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-white to-transparent z-0"></div>
+
+     <main class="relative z-10">
+          <section class="relative overflow-hidden bg-transparent">
+
+               <div class="absolute inset-0 z-0 opacity-[0.03]"
+                    style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 32px 32px;">
+               </div>
+
                <div
-                    class="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
+                    class="relative z-10 mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
+
                     <div class="max-w-2xl">
-                         <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-slate-500">Campus hiring
-                              made practical</p>
-                         <h1 class="text-4xl font-bold leading-tight text-slate-950 sm:text-6xl">Find serious
-                              opportunities without the noise.</h1>
-                         <p class="mt-6 text-lg leading-8 text-slate-600">Skratchr helps students discover relevant jobs
-                              and recruiters manage companies, postings, and applications from one clean workspace.</p>
-                         <div class="mt-8 flex flex-wrap gap-3">
+                         <div
+                              class="mb-6 inline-flex items-center rounded-full border border-black/10 bg-white px-4 py-1.5 shadow-sm">
+                              <span class="flex h-2 w-2 rounded-full bg-black"></span>
+                              <span class="ml-2 text-xs font-bold uppercase tracking-widest text-black">Campus hiring
+                                   redefined</span>
+                         </div>
+
+                         <h1 class="text-5xl font-black leading-[1.1] tracking-tight text-black sm:text-7xl">
+                              Find serious opportunities.<br>
+                              <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-500">Without
+                                   the noise.</span>
+                         </h1>
+
+                         <p class="mt-8 text-lg leading-relaxed text-gray-600 max-w-xl font-medium">
+                              Skratchr helps students discover relevant jobs and recruiters manage companies, postings,
+                              and applications from one uncompromisingly clean workspace.
+                         </p>
+
+                         <div class="mt-10 flex flex-wrap gap-4">
                               <a href="browse.html"
-                                   class="rounded-md bg-slate-950 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">Browse
-                                   Jobs</a>
+                                   class="inline-flex items-center justify-center rounded-full bg-black px-8 py-4 text-sm font-bold tracking-wide text-white shadow-xl shadow-black/20 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/30">
+                                   Browse Jobs <i class="fas fa-arrow-right ml-2"></i>
+                              </a>
                               <a href="signup.html"
-                                   class="rounded-md border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-100">Create
-                                   Account</a>
+                                   class="inline-flex items-center justify-center rounded-full border-2 border-gray-200 bg-white px-8 py-4 text-sm font-bold tracking-wide text-black shadow-sm transition-all hover:-translate-y-1 hover:border-black hover:bg-gray-50">
+                                   Create Account
+                              </a>
                          </div>
                     </div>
-                    <div class="relative">
+
+                    <div class="relative w-full max-w-lg mx-auto lg:max-w-none group">
+                         <div
+                              class="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-gray-200 to-gray-50 opacity-50 blur-2xl transition-opacity duration-500 group-hover:opacity-80">
+                         </div>
                          <img src="./assets/images/headerbg.png" alt="Students working on careers"
-                              class="w-full rounded-lg border border-slate-200 object-cover shadow-sm">
+                              class="relative z-10 w-full rounded-2xl border border-gray-200 bg-white object-cover shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
                     </div>
                </div>
           </section>
 
-          <section class="border-y border-slate-200 bg-slate-50 py-14">
+          <section class="border-t border-gray-200 bg-black py-24 text-white"
+               style="background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 24px 24px;">
                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="max-w-2xl">
-                         <h2 class="text-3xl font-bold text-slate-950">Built for the real campus workflow</h2>
-                         <p class="mt-3 text-slate-600">Students can search, apply, and track applications. Recruiters
-                              can create companies, post jobs, and review applicants.</p>
+                    <div class="max-w-3xl">
+                         <h2 class="text-4xl font-black tracking-tight sm:text-5xl drop-shadow-md">Built for the real
+                              campus workflow.</h2>
+                         <p class="mt-6 text-xl leading-relaxed text-gray-300 font-medium">Students can search, apply,
+                              and track applications. Recruiters can create companies, post jobs, and review applicants.
+                         </p>
                     </div>
-                    <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-                              <h3 class="font-semibold text-slate-950">Focused Listings</h3>
-                              <p class="mt-2 text-sm leading-6 text-slate-600">Browse roles by title, company, job type,
-                                   location, and experience level.</p>
+
+                    <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
+                         <article
+                              class="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md p-8 transition-all hover:bg-white/10 hover:-translate-y-2">
+                              <div
+                                   class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                   <i class="fas fa-search text-xl"></i>
+                              </div>
+                              <h3 class="text-xl font-bold text-white drop-shadow-md">Focused Listings</h3>
+                              <p
+                                   class="mt-4 text-sm leading-relaxed text-gray-400 font-medium group-hover:text-gray-300">
+                                   Browse roles by title, company, job type, location, and experience level without
+                                   distractions.</p>
                          </article>
-                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-                              <h3 class="font-semibold text-slate-950">Simple Applications</h3>
-                              <p class="mt-2 text-sm leading-6 text-slate-600">Upload a resume, add a cover letter, and
-                                   avoid duplicate applications.</p>
+
+                         <article
+                              class="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md p-8 transition-all hover:bg-white/10 hover:-translate-y-2">
+                              <div
+                                   class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                   <i class="fas fa-file-upload text-xl"></i>
+                              </div>
+                              <h3 class="text-xl font-bold text-white drop-shadow-md">Simple Applications</h3>
+                              <p
+                                   class="mt-4 text-sm leading-relaxed text-gray-400 font-medium group-hover:text-gray-300">
+                                   Upload a resume, add a cover letter, and let our system automatically prevent
+                                   duplicate applications.</p>
                          </article>
-                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-                              <h3 class="font-semibold text-slate-950">Recruiter Tools</h3>
-                              <p class="mt-2 text-sm leading-6 text-slate-600">Register companies, post openings, and
-                                   keep job records organized.</p>
+
+                         <article
+                              class="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md p-8 transition-all hover:bg-white/10 hover:-translate-y-2">
+                              <div
+                                   class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                   <i class="fas fa-briefcase text-xl"></i>
+                              </div>
+                              <h3 class="text-xl font-bold text-white drop-shadow-md">Recruiter Tools</h3>
+                              <p
+                                   class="mt-4 text-sm leading-relaxed text-gray-400 font-medium group-hover:text-gray-300">
+                                   Register multiple companies, post openings instantly, and keep all job records
+                                   perfectly organized.</p>
                          </article>
-                         <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-                              <h3 class="font-semibold text-slate-950">Status Tracking</h3>
-                              <p class="mt-2 text-sm leading-6 text-slate-600">Students see application status while
-                                   recruiters move candidates forward.</p>
+
+                         <article
+                              class="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md p-8 transition-all hover:bg-white/10 hover:-translate-y-2">
+                              <div
+                                   class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                                   <i class="fas fa-tasks text-xl"></i>
+                              </div>
+                              <h3 class="text-xl font-bold text-white drop-shadow-md">Status Tracking</h3>
+                              <p
+                                   class="mt-4 text-sm leading-relaxed text-gray-400 font-medium group-hover:text-gray-300">
+                                   Students see real-time application status updates while recruiters seamlessly move
+                                   candidates forward.</p>
                          </article>
+
                     </div>
                </div>
           </section>
