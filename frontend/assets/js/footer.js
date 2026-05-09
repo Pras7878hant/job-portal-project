@@ -11,11 +11,6 @@ export function loadFooter() {
         
         <div class="md:col-span-5 lg:col-span-4">
           <div class="flex items-center gap-2 mb-6">
-            <img 
-              class="h-10 w-auto object-contain brightness-0 invert drop-shadow-lg" 
-              src="${basePath}/assets/images/myLogo.png" 
-              alt="Skratchr"
-            >
             <span class="text-2xl font-black tracking-tighter uppercase drop-shadow-md">Skratchr</span>
           </div>
 
