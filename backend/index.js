@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const allowedOrigins = [
+  process.env.FRONTEND_URL,
   process.env.CLIENT_URL,
   "http://localhost:5500",
   "http://127.0.0.1:5500",
@@ -29,10 +30,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error(`CORS blocked origin: ${origin}`));
-  },
+  origin: allowedOrigins, 
   credentials: true
 }));
 
