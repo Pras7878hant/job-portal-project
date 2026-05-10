@@ -56,6 +56,19 @@ const userSchema = new mongoose.Schema({
      portfolioTheme: {
           type: String,
           default: 'light'
+     },
+     accountStatus: {
+          type: String,
+          enum: ['Unverified', 'Active', 'Pending'],
+          default: 'Unverified'
+     },
+     otp: {
+          type: String,
+          default: ""
+     },
+     otpExpires: {
+          type: Date,
+          default: null
      }
 }, { timestamps: true });
 

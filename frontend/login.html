@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Login - Skratchr</title>
      <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="min-h-screen bg-slate-50 text-slate-950">
      <main class="flex min-h-screen items-center justify-center px-4 py-10">
           <section class="w-full max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
@@ -16,39 +14,42 @@
                <p class="mt-2 text-sm text-slate-600">Use the same role you selected while signing up.</p>
 
                <form id="login-form" class="mt-6 space-y-4">
-                    <div>
-                         <label for="email" class="block text-sm font-medium text-slate-700">Email</label>
-                         <input
-                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
-                              type="email" id="email" name="email" required>
+                    <div id="step-1" class="space-y-4">
+                         <div>
+                              <label for="email" class="block text-sm font-medium text-slate-700">Email</label>
+                              <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" type="email" id="email" name="email" required>
+                         </div>
+                         <div>
+                              <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
+                              <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" type="password" id="password" name="password" required>
+                         </div>
+                         <div>
+                              <label for="role" class="block text-sm font-medium text-slate-700">Login as</label>
+                              <select class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" id="role" name="role" required>
+                                   <option value="">Select Role</option>
+                                   <option value="student">Student</option>
+                                   <option value="recruiter">Recruiter</option>
+                              </select>
+                         </div>
                     </div>
-                    <div>
-                         <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
-                         <input
-                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
-                              type="password" id="password" name="password" required>
+
+                    <div id="step-2" class="hidden space-y-4">
+                         <div class="rounded-md bg-blue-50 p-4 border border-blue-100">
+                              <p class="text-sm text-blue-800">We've sent a 6-digit OTP to your email. Enter it to proceed.</p>
+                         </div>
+                         <div>
+                              <label for="otp" class="block text-sm font-medium text-slate-700">6-Digit OTP</label>
+                              <input class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-center text-lg tracking-[0.5em] font-bold outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200" type="text" id="otp" name="otp" maxlength="6">
+                         </div>
                     </div>
-                    <div>
-                         <label for="role" class="block text-sm font-medium text-slate-700">Login as</label>
-                         <select
-                              class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
-                              id="role" name="role" required>
-                              <option value="">Select Role</option>
-                              <option value="student">Student</option>
-                              <option value="recruiter">Recruiter</option>
-                         </select>
-                    </div>
-                    <button type="submit"
-                         class="w-full rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">Login</button>
+
+                    <button id="submit-btn" type="submit" class="w-full rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">Request Login OTP</button>
                </form>
 
-               <div id="login-message" class="mt-4 text-sm"></div>
-               <p class="mt-5 text-sm text-slate-600">Don't have an account? <a
-                         class="font-semibold text-slate-950 hover:underline" href="signup.html">Sign up</a></p>
+               <div id="login-message" class="mt-4 text-sm font-medium"></div>
+               <p class="mt-5 text-sm text-slate-600">Don't have an account? <a class="font-semibold text-slate-950 hover:underline" href="signup.html">Sign up</a></p>
           </section>
      </main>
-
      <script type="module" src="./assets/js/login.js"></script>
 </body>
-
 </html>

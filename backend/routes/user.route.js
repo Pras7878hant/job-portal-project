@@ -1,8 +1,10 @@
 import express from "express";
 import {
-     login,
+     sendSignupOtp,
+     verifySignupOtp,
+     sendLoginOtp,
+     verifyLoginOtp,
      logout,
-     register,
      getProfile,
      updateProfile,
      getPublicProfile
@@ -12,12 +14,14 @@ import { upload } from '../middlewares/multer.js';
 
 const router = express.Router();
 
-router.post("/register", upload.single('profilePhoto'), register);
-router.post('/login', login);
+router.post("/register/send-otp", upload.single('profilePhoto'), sendSignupOtp);
+router.post("/register/verify", verifySignupOtp);
+
+router.post("/login/send-otp", sendLoginOtp);
+router.post("/login/verify", verifyLoginOtp);
+
 router.get("/logout", logout);
-
 router.get("/portfolio/:username", getPublicProfile);
-
 router.get('/profile', isAuthenticated, getProfile);
 
 router.put('/profile', isAuthenticated, upload.fields([
