@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const allowedOrigins = [
+  "https://skratchr-job-portal.vercel.app",
   process.env.FRONTEND_URL,
   process.env.CLIENT_URL,
   "http://localhost:5500",
@@ -29,9 +30,13 @@ const allowedOrigins = [
   "http://127.0.0.1:5173"
 ].filter(Boolean);
 
+const cleanOrigins = allowedOrigins.map(url => url.replace(/\/$/, ""));
+
 app.use(cors({
-  origin: allowedOrigins, 
-  credentials: true
+  origin: cleanOrigins, 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 const PORT = process.env.PORT || 3000;
