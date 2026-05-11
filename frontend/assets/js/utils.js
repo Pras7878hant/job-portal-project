@@ -1,5 +1,5 @@
 const configuredApiUrl = window.__API_BASE_URL__;
-export const BASE_API_URL = configuredApiUrl || 'http://localhost:8000/api/v1';
+export const BASE_API_URL = configuredApiUrl || 'https://skratchr-job-portal.onrender.com/api/v1';
 
 export const AUTH_API_END_POINT = `${BASE_API_URL}/user`;
 export const COMPANY_API_END_POINT = `${BASE_API_URL}/company`;

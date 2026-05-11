@@ -1,3 +1,5 @@
+import { USER_API_END_POINT } from './utils.js';
+
 function showMessage(message, color = 'red') {
      const loginMessage = document.getElementById('login-message');
      if (loginMessage) {
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     submitBtn.disabled = true;
                     submitBtn.textContent = "Verifying Credentials...";
 
-                    const response = await fetch('http://localhost:8000/api/v1/user/login/send-otp', {
+                    const response = await fetch(`${USER_API_END_POINT}/login/send-otp`, {
                          method: 'POST',
                          headers: { 'Content-Type': 'application/json' },
                          credentials: 'include',
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     submitBtn.disabled = true;
                     submitBtn.textContent = "Logging in...";
 
-                    const response = await fetch('http://localhost:8000/api/v1/user/login/verify', {
+                    const response = await fetch(`${USER_API_END_POINT}/login/verify`, {
                          method: 'POST',
                          headers: { 'Content-Type': 'application/json' },
                          credentials: 'include',
